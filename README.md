@@ -1,4 +1,4 @@
 Eaton
 =====
 
-Real-time talent identification using natural language processing, machine learning, and map-reduce
+Real-time talent identification using natural language processing, machine learning, websockets and map-reduce
