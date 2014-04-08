@@ -1,9 +1,8 @@
-package digest;
+package data;
 
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -37,10 +36,9 @@ import opennlp.tools.util.ObjectStream;
 import opennlp.tools.util.PlainTextByLineStream;
 import opennlp.tools.util.Span;
 
-public class ReadText {
+public class NLPMachine {
 	
 	
-
 	public static void SentenceDetect() throws InvalidFormatException, IOException {
 		String paragraph = "Hi. How are you? This is Mike.";
 
@@ -92,32 +90,53 @@ public class ReadText {
 		perfMon.stopAndPrintFinalResult();
 	}
 	
+	public void findName() throws IOException {
+
+		NameFinderME nameFinder = new NameFinderME(nameFinderOrgModel);
+		String[] sentence = new String[] { "Robert", "Johnson", "is", "a", "good", "person", "in", "The Department of Justice" };
+		Span nameSpans[] = nameFinder.find(sentence);
+
+		for (Span s : nameSpans)
+			System.out.println(s.toString());
+		
+		String names[]  = Span.spansToStrings(nameSpans, sentence);
+		
+		for (String s : names){
+			System.out.println(s);
+		}
+		
+	}
 
 	public static TokenizerModel tokenizerModel;
 	public static POSModel posPerceptronModel;
+	public static TokenNameFinderModel nameFinderPersonModel;
+	public static TokenNameFinderModel nameFinderOrgModel;
 
 	static {
 		
 		try {
 			tokenizerModel = new TokenizerModel(new FileInputStream("resources/en-token.bin"));
 			posPerceptronModel = new POSModelLoader().load(new File("resources/en-pos-perceptron.bin"));
+			nameFinderPersonModel = new TokenNameFinderModel(new FileInputStream("resources/en-ner-person.bin"));
+			//nameFinderPersonModel = new TokenNameFinderModel(new FileInputStream("C:/resume-project/resume/name/person.bin"));
+			nameFinderOrgModel = new TokenNameFinderModel(new FileInputStream("resources/en-ner-organization.bin"));
+
+			
 		} catch (Exception e){
 			
 		}
 	}
 		
 
-	public static String[] tokenize(String str) throws InvalidFormatException, IOException {
+	public String[] tokenize(String str) throws InvalidFormatException, IOException {
 		Tokenizer tokenizer = new TokenizerME(tokenizerModel);
 		String tokens[] = tokenizer.tokenize(str);
 		return tokens;
 	}
 
-	public static Map<String, Integer> PosTagResume(String fileName) throws IOException {
+	public Map<String, Integer> PosTagResume(File file) throws IOException {
 		
 		POSTaggerME tagger = new POSTaggerME(posPerceptronModel);
-
-		File file = new File(fileName);
 		BufferedReader reader = null;
 		InputStream fis = null;
 		Map<String, Integer> tokenMap = new HashMap<String, Integer>();
@@ -130,15 +149,12 @@ public class ReadText {
 			String line;
 			while ((line = reader.readLine()) != null) {
 
-				String whitespaceTokenizerLine[] = WhitespaceTokenizer.INSTANCE
-						.tokenize(line);
+				String whitespaceTokenizerLine[] = WhitespaceTokenizer.INSTANCE.tokenize(line);
 				String[] tags = tagger.tag(whitespaceTokenizerLine);
 				for (int i = 0; i < tags.length; i++) {
 					String tag = tags[i];
-					String token = whitespaceTokenizerLine[i].replaceAll(
-							"[^\\p{L}\\p{Nd}]", "").toLowerCase();
-					if ((tag.contains("NN") || tag.contains("JJ"))
-							&& !token.equals("")) {
+					String token = whitespaceTokenizerLine[i].replaceAll("[^\\p{L}\\p{Nd}]", "").toLowerCase();
+					if ((tag.contains("NN") || tag.contains("JJ"))&& !token.equals("")) {
 						if (tokenMap.get(token) == null) {
 							tokenMap.put(token, 1);
 						} else {
@@ -155,8 +171,31 @@ public class ReadText {
 			}
 		}
 	}
+	
+	public List<String> PosTagString(String text) throws IOException {
+		
+		POSTaggerME tagger = new POSTaggerME(posPerceptronModel);
 
-	public static Map<String, Integer> sortMapByValue(Map<String, Integer> map) {
+		String whitespaceTokenizerLine[] = WhitespaceTokenizer.INSTANCE.tokenize(text);
+		String[] tags = tagger.tag(whitespaceTokenizerLine);
+		List<String> nounsAdjectives = new ArrayList<String>();
+		for (int i = 0; i < tags.length; i++) {
+			String tag = tags[i];
+			String token = whitespaceTokenizerLine[i].replaceAll("[^\\p{L}\\p{Nd}]", "").toLowerCase();
+			if ((tag.contains("NN") || tag.contains("JJ"))&& !token.equals("")) {
+				nounsAdjectives.add(token);
+			}
+		}
+		return nounsAdjectives;
+	}
+	 
+	
+	public Map<String, Integer> PosTagResume(String fileName) throws IOException {
+		File file = new File(fileName);
+		return PosTagResume(file);
+	}
+
+	public Map<String, Integer> sortMapByValue(Map<String, Integer> map) {
 		List<Entry<String, Integer>> list = new ArrayList<Entry<String, Integer>>(map.entrySet());
 		Collections.sort(list, new Comparator<Entry<String, Integer>>() {
 			public int compare(Entry<String, Integer> e1,
@@ -171,14 +210,14 @@ public class ReadText {
 		return sorted;
 	}
 
-	public static void printMap(Map<String, Integer> map) {
+	public void printMap(Map<String, Integer> map) {
 
 		for (Map.Entry<String, Integer> pair : map.entrySet()) {
 			System.out.println(pair.getKey() + "\t" + pair.getValue());
 		}
 	}
 
-	public static String[] findTokens(String fileName, TokenNameFinderModel model) throws IOException {
+	public String[] findNames(String fileName, TokenNameFinderModel model) throws IOException {
 
 		NameFinderME nameFinder = new NameFinderME(model);
 
@@ -194,8 +233,7 @@ public class ReadText {
 			while ((line = reader.readLine()) != null) {
 				String[] tokenizedLine = tokenize(line);
 				Span spansFromLine[] = nameFinder.find(tokenizedLine);
-				nameArr = ArrayUtils.addAll(nameArr,
-						Span.spansToStrings(spansFromLine, tokenizedLine));
+				nameArr = ArrayUtils.addAll(nameArr, Span.spansToStrings(spansFromLine, tokenizedLine));
 			}
 		} finally {
 			if (fis != null) {
@@ -207,51 +245,47 @@ public class ReadText {
 		return nameArr;
 	}
 
-	public static String[] findNames(String fileName) throws IOException {
-		InputStream is = new FileInputStream("resources/en-ner-person.bin");
-		//InputStream is = new FileInputStream("C:/resume-project/resume/name/person.bin");
-		TokenNameFinderModel model = new TokenNameFinderModel(is);
-		is.close();
-
-		return findTokens(fileName, model);
+	public String[] findPersonNames(String fileName) throws IOException {
+		return findNames(fileName, nameFinderPersonModel);
 	}
 
-	public static String[] findOrganizations(String fileName)
-			throws IOException {
-		InputStream is = new FileInputStream("resources/en-ner-organization.bin");
-		TokenNameFinderModel model = new TokenNameFinderModel(is);
-		is.close();
-
-		return findTokens(fileName, model);
+	public String[] findOrganizationNames(String fileName) throws IOException {
+		return findNames(fileName, nameFinderOrgModel);
 	}
 
-	public static void findName() throws IOException {
-		InputStream is = new FileInputStream("resources/en-ner-organization.bin");
-
-		TokenNameFinderModel model = new TokenNameFinderModel(is);
-		is.close();
-
-		NameFinderME nameFinder = new NameFinderME(model);
-
-		String[] sentence = new String[] { "Robert", "Johnson", "is", "a", "good", "person", "in", "The Department of Justice" };
-
-		Span nameSpans[] = nameFinder.find(sentence);
-
-		for (Span s : nameSpans)
-			System.out.println(s.toString());
-		
-		String names[]  = Span.spansToStrings(nameSpans, sentence);
-		
-		for (String s : names){
-			System.out.println(s);
-		}
-		
-	}
-
-	public static void printStringArr(String[] stringArray) {
+	public void printStringArr(String[] stringArray) {
 		for (String str : stringArray) {
 			System.out.println(str);
 		}
+	}
+	
+	public String findNameDummy(File file) throws IOException{
+		BufferedReader reader = null;
+		InputStream fis = null;
+		try {
+			fis = new FileInputStream(file);
+			reader = new BufferedReader(new InputStreamReader(fis));
+
+			String line;
+			while ((line = reader.readLine()) != null) {
+				int startIdx = line.indexOf("<START:person>");
+				if (startIdx < 0){
+					continue;
+				}
+				return line.substring(startIdx, line.indexOf("<END>")).replace("<START:person>", "").trim();
+			}
+		} finally {
+			if (fis != null) {
+				fis.close();
+				reader.close();
+			}
+		}
+		return "";
+	}
+	
+	public String findNameDummy(String fileName) throws IOException{
+		File file = new File(fileName);
+		return findNameDummy(file);
 	}
 
 	@SuppressWarnings("unused")
@@ -269,10 +303,12 @@ public class ReadText {
 			// Names and orgs
 //			 findName();
 
-			//String[] names = findNames("c:/temp/resume.txt");
-			String[] names = findNames("C:/resume-project/resume/name/0bcbe887-ff7b-4405-918d-6e3a64c932be.txt");
-			printStringArr(names);
-//			String[] orgs = findOrganizations("c:/temp/resume.txt");
+			//String[] names = findPersonNames("c:/temp/resume.txt");
+			NLPMachine tf = new NLPMachine();
+			//String[] names = tf.findPersonNames("C:/resume-project/resume/text/9c00937c-7368-4ade-b791-9905fb52862f.doc.txt");
+		    System.out.println(tf.findNameDummy("C:/resume-project/resume/text/9c00937c-7368-4ade-b791-9905fb52862f.doc.txt"));
+			//tf.printStringArr(names);
+//			String[] orgs = findOrganizationsNames("c:/temp/resume.txt");
 //			printStringArr(orgs);
 
 		} catch (InvalidFormatException e) {
