@@ -1,11 +1,20 @@
+<!DOCTYPE html>
 <html>
 	<head>
-		<title>Submit A Resume</title>
+		<title>Upload Form</title>
 		<meta charset="utf-8" />
  		<meta http-equiv="Content-type" content="text/html; charset=utf-8" />
  		<meta name="viewport" content="width=device-width, initial-scale=1" />
 	</head>
 	<body>
+		<style type="text/css">
+			.navigationBar {
+				border: 3px solid black;
+			}
+			.footer {
+				float: bottom;
+			}
+		</style>
 		<div class="content">
 			<div id="header">
 				<div id="navigationBar">
@@ -17,13 +26,27 @@
 				</div>
 			</div>
 			<div id="mainContent">
-				<p>This is a test to see if our changes merge correctly</p>
+				<p>I want to:</p>
 				<form>
-					<input type="radio"/>
-					<input type="radio"/>
-					<input type="text">
-					<input type="text">
+					<input type="radio" name="user" value="recruiter"/>Hire Talent<br>
+					<input type="radio" name="user" value="jobseeker"/>Find a Job<br>
 				</form>
+				<p>Job Title:</p>
+				<form>
+					<input type="text" name="title" value="Text"/>
+				</form>
+				<p>Resume/Job Description</p>
+				<form>
+					<input type="text" name="resume" value="Select File"/>
+				</form>
+				<!--Browse button-->
+				<p>File Type:</p>
+				<select name="filetype">
+					<option value="pdf">PDF</option>
+					<option value="text">RTF</option>
+					<option value="word">Word Document</option>
+				</select>
+				<!--Submit button-->
 			</div>
 			<div id="footer">
 				<p>Evans & Chambers Technology, LLC © Copyright 2015</p>
