@@ -1,0 +1,31 @@
+.content {
+	border: 1px black solid;
+	padding: 40px 10px 0 10px;
+	width:1000px;
+	margin: 0 auto;
+}
+#navigationBar {
+	border: 1px black solid;
+	border-radius: 10px;
+ 	position: relative;
+ 	height: 100px;
+ 	margin-bottom: 20px;
+ 	padding: 5px 0 0 10px;
+ 	font-size: 1.5em;
+}
+#navigationBar ul {
+	list-style-type: none;
+	position: relative;
+	top: 45px;
+	left:100px;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+}
+#navigationBar li {
+	float: left;
+	padding-right: 10px;
+	padding-left: 10px;
+	margin: 0;
+	border-right: 1px solid black;
+}
