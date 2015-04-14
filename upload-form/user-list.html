@@ -40,17 +40,6 @@
  			}
  		</style>
  		<script type="text/javascript">
- 		function login() {
-		    var user = prompt("Enter email address");
-
-		    if (user != null) {
-		         var pass = prompt("Enter password");
-		    }
-		    else {
-		         alert("Please enter email address to log in");
-		    }
-		}
-
  		function handleFileSelect(evt) {
 		    var files = evt.target.files; // FileList object
 
@@ -71,7 +60,7 @@
  		}
  		</script>
 	</head>
-	<body onload="login()">
+	<body>
 		<div class="content">
 			<div id="header">
 				<nav id="navigationBar">
@@ -83,32 +72,6 @@
 				</nav>
 			</div>
 			<div id="mainContent">
-				<p>I want to:</p>
-				<form>
-					<input type="radio" name="user" value="recruiter"/>Hire Talent<br>
-					<input type="radio" name="user" value="jobseeker"/>Find a Job<br>
-				</form>
-				<p>Job Title:</p>
-				<form>
-					<input type="text" name="title" value="Text"/>
-				</form>
-				<p>Resume/Job Description</p>
-				<form>
-					<input type="text" name="resume" value="Select File"/>
-				</form>
-				<input type="file" id="files" name="files[]" multiple />
-				<output id="list"></output>
-				<p>File Type:</p>
-				<select name="filetype">
-					<option value="pdf">PDF</option>
-					<option value="text">RTF</option>
-					<option value="word">Word Document</option>
-				</select>
-				<br/>
-				<br/>
-				<input type="submit" onclick="submit()">Submit</button>
-
-
 			</div>
 
 			<footer>
