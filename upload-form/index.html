@@ -39,6 +39,7 @@
  				border-right: 1px solid black;
  			}
  		</style>
+<<<<<<< Updated upstream
  		<script type="text/javascript">
  		function login() {
 		    var user = prompt("Enter email address");
@@ -70,6 +71,8 @@
  			if () {};
  		}
  		</script>
+=======
+>>>>>>> Stashed changes
 	</head>
 	<body onload="login()">
 		<div class="content">
@@ -87,16 +90,11 @@
 				<form>
 					<input type="radio" name="user" value="recruiter"/>Hire Talent<br>
 					<input type="radio" name="user" value="jobseeker"/>Find a Job<br>
-				</form>
-				<p>Job Title:</p>
-				<form>
-					<input type="text" name="title" value="Text"/>
-				</form>
+				<p>Email: <input type="email" placeholder="example@example.com" name="email"></p>
+				<p>Job Title: <input type="text" name="title" placeholder="Text"/> </p>
 				<p>Resume/Job Description</p>
-				<form>
-					<input type="text" name="resume" value="Select File"/>
-				</form>
-				<input type="file" id="files" name="files[]" multiple />
+					<input type="text" name="resume" placeholder="Select File"/>
+					<input type="file" id="files" name="files[]" multiple />
 				<output id="list"></output>
 				<p>File Type:</p>
 				<select name="filetype">
@@ -106,7 +104,16 @@
 				</select>
 				<br/>
 				<br/>
+<<<<<<< Updated upstream
 				<input type="submit" onclick="submit()">Submit</button>
+=======
+				<input id="Submit" type="submit" value="Submit" onclick="submit()">
+				<input type="reset" value="Clear">
+
+				</form>
+				
+				
+>>>>>>> Stashed changes
 
 
 			</div>
@@ -115,5 +122,7 @@
 				<p>Evans & Chambers Technology, LLC © Copyright 2015</p>
 			</footer>
 		</div>
+		<script src="index.js">
+		</script>
 	</body>
 </html>
