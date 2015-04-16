@@ -1,3 +1,4 @@
+/*
 function login() {
 		    var user = prompt("Enter email address");
 
@@ -8,6 +9,7 @@ function login() {
 		         alert("Please enter email address to log in");
 		    }
 		};
+*/
 
 function handleFileSelect(evt) {
 		    var files = evt.target.files; // FileList object
