@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "Upload forms to S3 Bucket",
   "dependencies": {
-        "aws-sdk": ">= 2.0.9",
-        "node-uuid": ">= 1.4.1"
-    }
+    "aws-sdk": ">= 2.0.9",
+    "express": "^4.12.3",
+    "node-uuid": ">= 1.4.1"
+  }
 }
