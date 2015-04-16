@@ -1,3 +1,14 @@
+function login() {
+		    var user = prompt("Enter email address");
+
+		    if (user != null) {
+		         var pass = prompt("Enter password");
+		    }
+		    else {
+		         alert("Please enter email address to log in");
+		    }
+		};
+
 function handleFileSelect(evt) {
 		    var files = evt.target.files; // FileList object
 
@@ -10,8 +21,9 @@ function handleFileSelect(evt) {
 		                  '</li>');
 		    }
 		    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
-		}
-		document.getElementById('files').addEventListener('change', handleFileSelect, false);
-	function submit(){
+};
+document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+function submit(){
 		
-	}
+};
