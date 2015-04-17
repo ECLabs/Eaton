@@ -33,11 +33,20 @@
 				</nav>
 			</div>
 			<div id="mainContent">
-				<p>I want to:</p>
-				<form onclick="">
-					<input type="radio" name="user" value="recruiter"/>Hire Talent<br>
-					<input type="radio" name="user" value="jobseeker"/>Find a Job<br>
-				<p>Email: <input type="email" placeholder="example@example.com" name="email"></p>
+
+<!--			<p>		-->
+				I want to: 
+					</br>
+					<form onclick="">
+						<input type="radio" name="user" value="recruiter"/>Hire Talent<br>
+						<input type="radio" name="user" value="jobseeker"/>Find a Job<br>
+					</form>
+<!--			</p>	-->
+
+				<p>Email: 
+					</br>
+					<input type="email" placeholder="example@example.com" name="email">
+				</p>
 <!--			<p>Job Title: <input type="text" name="title" placeholder="Text"/> </p>		-->
 
 				<style type='text/css'>#indJobContent{padding-bottom: 5px;}#indJobContent .company_location{font-size: 11px;overflow: hidden;display:block;}#indJobContent.wide .job{display:block;float:left;margin-right: 5px;width: 135px;overflow: hidden}#indeed_widget_wrapper{position: relative;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 13px;font-weight: normal;line-height: 18px;padding: 10px;height: auto;overflow: hidden;}#indeed_widget_header{font-size:18px; padding-bottom: 5px; }#indeed_search_wrapper{clear: both;font-size: 12px;margin-top: 0px;padding-top: 2px;}#indeed_search_wrapper label{font-size: 12px;line-height: inherit;text-align: left; margin-right: 5px;}#indeed_search_wrapper input[type='text']{width: 100px; font-size: 11px; }#indeed_search_wrapper #qc{float:left;}#indeed_search_wrapper #lc{float:right;}#indeed_search_wrapper.stacked #qc, #indeed_search_wrapper.stacked #lc{float: none; clear: both;}#indeed_search_wrapper.stacked input[type='text']{width: 150px;}#indeed_search_wrapper.stacked label{display: block;padding-bottom: 5px;}#indeed_search_footer{width:295px; padding-top: 5px; clear: both;}#indeed_link{position: absolute;bottom: 1px;right: 5px;clear: both;font-size: 11px; }#indeed_link a{text-decoration: none;}#results .job{padding: 1px 0px;}#pagination { clear: both; }</style><style type='text/css'>
@@ -98,18 +107,33 @@
 					</div>
 				</div>
 
-				<p>Resume/Job Description</p>
-<!--					<input type="text" name="resume" placeholder="Select File"/>	-->
+				<p id="general">Resume/Job Description:
+					</br>
+					...
+				</p>
+
+				<p id="descript">Job Description:
+<!--				<input type="text" name="resume" placeholder="Select File"/>	-->
+					</br>
 					<input type="file" id="files" name="files[]" multiple />
-				<output id="list"></output>
-				<p>File Type:</p>
-				<select name="filetype">
-					<option value="pdf">PDF</option>
-					<option value="text">RTF</option>
-					<option value="word">Word Document</option>
-				</select>
-				<br/>
-				<br/>
+					<output id="list"></output>
+				</p>
+
+				<p id="resume">Resume:
+<!--				<input type="text" name="resume" placeholder="Select File"/>	-->
+					</br>
+					<input type="file" id="files" name="files[]" multiple />
+					<output id="list"></output>
+				</p>
+				
+				<p>File Type:
+					</br>
+					<select name="filetype">
+						<option value="pdf">PDF</option>
+						<option value="text">RTF</option>
+						<option value="word">Word Document</option>
+					</select>
+				</p>
 
 				<input id="Submit" type="submit" value="Submit" onclick="submit()">
 				<input type="reset" value="Clear">
@@ -118,7 +142,10 @@
 			</div>
 
 			<footer>
-				<p>Evans & Chambers Technology, LLC © Copyright 2015</p>
+				</br>
+				</br>
+				</br>
+				Evans & Chambers Technology, LLC © Copyright 2015
 			</footer>
 		</div>
 		<script src="index.js">

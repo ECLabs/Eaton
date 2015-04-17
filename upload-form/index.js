@@ -26,6 +26,15 @@ function handleFileSelect(evt) {
 };
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
+$(document).ready(function(){
+    $("#description").hide();
+ 
+    $(".btn2").click(function(){
+        $("p").show();
+  
+});
+
+
 function submit(){
 		
 };
