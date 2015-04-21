@@ -11,7 +11,6 @@ function login() {
 		};
 */
 
-<<<<<<< HEAD:upload-form/index.js
 var general = document.getElementById('general');
 general.style.visibility = 'visibile';
 
@@ -33,8 +32,6 @@ function toggle(switchElement) {
 		jobseeker.style.visibility = 'visibile';
 	}*/
 };
-=======
->>>>>>> origin/master:upload-form/public/index.js
 
 function handleFileSelect(evt) {
 		    var files = evt.target.files; // FileList object
@@ -49,9 +46,7 @@ function handleFileSelect(evt) {
 		    }
 		    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
 };
-<<<<<<< HEAD:upload-form/index.js
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
-=======
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
 $(document).ready(user(){
@@ -64,7 +59,3 @@ $(document).ready(user(){
 });
 
 
-
-
-
->>>>>>> origin/master:upload-form/public/index.js
