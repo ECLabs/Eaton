@@ -21,7 +21,7 @@
  		</script>	-->
 
 	</head>
-	<body onload="user()">
+	<body>
 		<div class="content">
 			<div id="header">
 				<nav id="navigationBar">
@@ -37,9 +37,9 @@
 <!--			<p>		-->
 				I want to: 
 					</br>
-					<form onclick="">
-						<input type="radio" name="user" value="recruiter"/>Hire Talent<br>
-						<input type="radio" name="user" value="jobseeker"/>Find a Job<br>
+					<form>
+						<input type="radio" name="user" value="recruiter" onclick="toggle(this)" />Hire Talent<br>
+						<input type="radio" name="user" value="jobseeker" onclick="toggle(this)" />Find a Job<br>
 					</form>
 <!--			</p>	-->
 
@@ -112,14 +112,14 @@
 					...
 				</p>
 
-				<p id="descript">Job Description:
-<!--				<input type="text" name="resume" placeholder="Select File"/>	-->
+				<p id="description" >Job Description:
+				<input type="text" name="resume" placeholder="Select File"/>
 					</br>
 					<input type="file" id="files" name="files[]" multiple />
 					<output id="list"></output>
 				</p>
 
-				<p id="resume">Resume:
+				<p id="resume" >Resume:
 <!--				<input type="text" name="resume" placeholder="Select File"/>	-->
 					</br>
 					<input type="file" id="files" name="files[]" multiple />

@@ -11,6 +11,28 @@ function login() {
 		};
 */
 
+var general = document.getElementById('general');
+general.style.visibility = 'visibile';
+
+var recruiter = document.getElementById('description');
+recruiter.style.visibility = 'hidden';
+
+var jobseeker = document.getElementById('resume');
+jobseeker.style.visibility = 'hidden';
+
+function toggle(switchElement) {
+	if (switchElement.value == 'recruiter') {
+		general.style.visibility = 'hidden';
+		recruiter.style.visibility = 'visibile';
+		jobseeker.style.visibility = 'hidden';
+	}
+/*	else if (switchElement.value =='jobseeker') {
+		general.style.visibility = 'hidden';
+		recruiter.style.visibility = 'hidden';
+		jobseeker.style.visibility = 'visibile';
+	}*/
+};
+
 function handleFileSelect(evt) {
 		    var files = evt.target.files; // FileList object
 
@@ -25,17 +47,3 @@ function handleFileSelect(evt) {
 		    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
 };
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
-
-$(document).ready(user(){
-    $("#descript").hide();
-
-    $("#resume").hide();
- 
-    $("#general").show();
-  
-});
-
-
-function submit() {
-		
-};
