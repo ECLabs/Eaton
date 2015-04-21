@@ -11,6 +11,7 @@ function login() {
 		};
 */
 
+
 function handleFileSelect(evt) {
 		    var files = evt.target.files; // FileList object
 
@@ -36,6 +37,6 @@ $(document).ready(user(){
 });
 
 
-function submit() {
-		
-};
+
+
+
