@@ -1,36 +1,28 @@
-/*
-function login() {
-		    var user = prompt("Enter email address");
-
-		    if (user != null) {
-		         var pass = prompt("Enter password");
-		    }
-		    else {
-		         alert("Please enter email address to log in");
-		    }
-		};
-*/
-
+function toggle(switchElement) {
 var general = document.getElementById('general');
-general.style.visibility = 'visibile';
+var genDisplaySetting = general.style.display;
+/*general.style.visibility = 'visibile';*/
 
 var recruiter = document.getElementById('description');
-recruiter.style.visibility = 'hidden';
+var recDisplaySetting = recruiter.style.display;
+/*recruiter.style.visibility = 'hidden';*/
 
 var jobseeker = document.getElementById('resume');
-jobseeker.style.visibility = 'hidden';
+var jobDisplaySetting = jobseeker.style.display;
+/*jobseeker.style.visibility = 'hidden';*/
 
-function toggle(switchElement) {
+
+/*function toggle(switchElement) {*/
 	if (switchElement.value == 'recruiter') {
-		general.style.visibility = 'hidden';
-		recruiter.style.visibility = 'visibile';
-		jobseeker.style.visibility = 'hidden';
+		general.style.display = 'none';
+		recruiter.style.display = 'block';
+		jobseeker.style.display = 'none';
 	}
-/*	else if (switchElement.value =='jobseeker') {
-		general.style.visibility = 'hidden';
-		recruiter.style.visibility = 'hidden';
-		jobseeker.style.visibility = 'visibile';
-	}*/
+	else if (switchElement.value =='jobseeker') {
+		general.style.display = 'none';
+		recruiter.style.display = 'none';
+		jobseeker.style.display = 'block';
+	}
 };
 
 function handleFileSelect(evt) {
@@ -48,14 +40,3 @@ function handleFileSelect(evt) {
 };
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
-
-$(document).ready(user(){
-    $("#descript").hide();
-
-    $("#resume").hide();
- 
-    $("#general").show();
-  
-});
-
-
