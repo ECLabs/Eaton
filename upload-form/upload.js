@@ -21,12 +21,13 @@ var AWS = require('aws-sdk');
 // Create an S3 client
 var s3 = new AWS.S3();
 
-// Create a bucket and upload something into it
-var bucketName = 'eaton-resume-bucket/resume-uploads';
-var keyName = 'myWorld.txt';
+var keyName;
 
-var params = {Bucket: bucketName, Key: keyName, Body: 'Hello World!'};
-s3.putObject(params, function(err, data) {
+exports.uploadFile = function(k){
+	var bucketName = 'eaton-resume-bucket/resume-uploads';
+	keyName = k.name;
+
+	s3.putObject(k, function(err, data) {
 	if (err){
 		console.log(err)
 	}
@@ -34,3 +35,6 @@ s3.putObject(params, function(err, data) {
       console.log("Successfully uploaded data to " + bucketName + "/" + keyName);
     }
   });
+};
+
+
