@@ -26,15 +26,16 @@ function handleFileSelect(evt) {
 };
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
-$(document).ready(function(){
-    $("#description").hide();
+$(document).ready(user(){
+    $("#descript").hide();
+
+    $("#resume").hide();
  
-    $(".btn2").click(function(){
-        $("p").show();
+    $("#general").show();
   
 });
 
 
-function submit(){
+function submit() {
 		
 };
