@@ -15,22 +15,18 @@
 **/
 
 // Load the SDK and UUID
-var AWS = require('aws-sdk');
+var express = require('express');
+var app = express();
+
+app.get('/', function(req, res){
+	res.sendFile(__dirname + '/public/index.html');
+});
+	
+app.use(express.static(__dirname+ '/public'));
 
 
-// Create an S3 client
-var s3 = new AWS.S3();
 
-// Create a bucket and upload something into it
-var bucketName = 'eaton-resume-bucket/resume-uploads';
-var keyName = 'myWorld.txt';
+app.listen(3000);
 
-var params = {Bucket: bucketName, Key: keyName, Body: 'Hello World!'};
-s3.putObject(params, function(err, data) {
-	if (err){
-		console.log(err)
-	}
-    else{
-      console.log("Successfully uploaded data to " + bucketName + "/" + keyName);
-    }
-  });
+console.log("Running on port 3000");
+
