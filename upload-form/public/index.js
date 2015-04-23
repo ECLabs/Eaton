@@ -1,18 +1,13 @@
 function toggle(switchElement) {
-var general = document.getElementById('general');
-var genDisplaySetting = general.style.display;
-/*general.style.visibility = 'visibile';*/
+	var general = document.getElementById('general');
+	var genDisplaySetting = general.style.display;
 
-var recruiter = document.getElementById('description');
-var recDisplaySetting = recruiter.style.display;
-/*recruiter.style.visibility = 'hidden';*/
+	var recruiter = document.getElementById('description');
+	var recDisplaySetting = recruiter.style.display;
 
-var jobseeker = document.getElementById('resume');
-var jobDisplaySetting = jobseeker.style.display;
-/*jobseeker.style.visibility = 'hidden';*/
+	var jobseeker = document.getElementById('resume');
+	var jobDisplaySetting = jobseeker.style.display;
 
-
-/*function toggle(switchElement) {*/
 	if (switchElement.value == 'recruiter') {
 		general.style.display = 'none';
 		recruiter.style.display = 'block';
@@ -26,21 +21,22 @@ var jobDisplaySetting = jobseeker.style.display;
 };
 
 function handleFileSelect(evt) {
-		    var files = evt.target.files; // FileList object
+    var files = evt.target.files; // FileList object
 
-		    // files is a FileList of File objects. List some properties.
-		    var output = [];
-		    for (var i = 0, f; f = files[i]; i++) {
-		      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
-		                  f.size, ' bytes, last modified: ',
-		                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
-		                  '</li>');
-		    }
-		    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                  f.size, ' bytes, last modified: ',
+                  f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                  '</li>');
+    }
+    document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
 };
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
+<<<<<<< HEAD
 var express = require('express');
 var https = require('https');
 var http = require('http');
@@ -59,3 +55,9 @@ app.use(express.static(__dirname+ '/public'));
 app.listen(3000);
 
 console.log("Running on port 3000");
+=======
+function submit() {
+	// Add functionality to check if info was submitted to bucket/db successfully or unsuccessfully
+	alert("Submitted successfully!");
+};
+>>>>>>> origin/master
