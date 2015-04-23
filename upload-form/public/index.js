@@ -36,7 +36,6 @@ function handleFileSelect(evt) {
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
-<<<<<<< HEAD
 var express = require('express');
 var https = require('https');
 var http = require('http');
@@ -55,9 +54,8 @@ app.use(express.static(__dirname+ '/public'));
 app.listen(3000);
 
 console.log("Running on port 3000");
-=======
+
 function submit() {
 	// Add functionality to check if info was submitted to bucket/db successfully or unsuccessfully
 	alert("Submitted successfully!");
 };
->>>>>>> origin/master
