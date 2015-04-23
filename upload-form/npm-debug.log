@@ -7,7 +7,7 @@
 6 info start upload-form@1.0.0
 7 verbose unsafe-perm in lifecycle true
 8 info upload-form@1.0.0 Failed to exec start script
-9 verbose stack Error: upload-form@1.0.0 start: `node upload.js`
+9 verbose stack Error: upload-form@1.0.0 start: `node index.js`
 9 verbose stack Exit status 1
 9 verbose stack     at EventEmitter.<anonymous> (/usr/local/lib/node_modules/npm/lib/utils/lifecycle.js:213:16)
 9 verbose stack     at EventEmitter.emit (events.js:110:17)
@@ -22,13 +22,13 @@
 14 error node v0.12.1
 15 error npm  v2.5.1
 16 error code ELIFECYCLE
-17 error upload-form@1.0.0 start: `node upload.js`
+17 error upload-form@1.0.0 start: `node index.js`
 17 error Exit status 1
-18 error Failed at the upload-form@1.0.0 start script 'node upload.js'.
+18 error Failed at the upload-form@1.0.0 start script 'node index.js'.
 18 error This is most likely a problem with the upload-form package,
 18 error not with npm itself.
 18 error Tell the author that this fails on your system:
-18 error     node upload.js
+18 error     node index.js
 18 error You can get their info via:
 18 error     npm owner ls upload-form
 18 error There is likely additional logging output above.

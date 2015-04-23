@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Upload forms to S3 Bucket",
   "scripts": {
-  	"start": "node upload.js"
+  	"start": "node index.js"
   },
   "dependencies": {
     "aws-sdk": ">= 2.0.9",
