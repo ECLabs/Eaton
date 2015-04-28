@@ -36,7 +36,7 @@ function handleFileSelect(evt) {
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 document.getElementById('files').addEventListener('change', handleFileSelect, false);
 
-function submit() {
+//function submit() {
 	// Add functionality to check if info was submitted to bucket/db successfully or unsuccessfully
-	alert("Submitted successfully!");
-};
+	//alert("Submitted successfully!");
+//};

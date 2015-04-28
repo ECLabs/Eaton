@@ -23,7 +23,7 @@
 <!--			<p>		-->
 				I want to: 
 					</br>
-					<form action="https://eaton-resume-bucket.s3.amazonaws.com/" method="post" enctype="multipart/form-data">
+					<form>
 						<input type="radio" name="user" value="recruiter" onclick="toggle(this)" />Hire Talent<br>
 						<input type="radio" name="user" value="jobseeker" onclick="toggle(this)" />Find a Job<br>
 					</form>
@@ -98,7 +98,7 @@
 					</br>
 					...
 				</p>
-
+				<form method="post" enctype="multipart/form-data" action="/fileupload">
 				<p id="description" >Job Description:
 					<br>
 					<input type="text" name="resume" placeholder="Job Title"/>
@@ -109,7 +109,7 @@
 				<p id="resume" >Resume:
 <!--				<input type="text" name="resume" placeholder="Select File"/>	-->
 					</br>
-					<input type="file" id="files" name="files[]" multiple />
+					<input type="file" id="files" name="thumbnail" multiple />
 					<output id="list"></output>
 				</p>
 				
@@ -122,7 +122,7 @@
 					</select>
 				</p>
 
-				<input id="Submit" type="submit" value="Submit" onclick="submit()">
+				<input id="Submit" type="submit" value="Submit">
 				<input type="reset" value="Clear">
 
 				</form>
@@ -137,5 +137,6 @@
 		</div>
 		<script src="index.js">
 		</script>
+		<script src="user.js"></script>
 	</body>
 </html>
