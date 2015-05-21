@@ -1,0 +1,172 @@
+<div class="content">
+			<div id="header">
+				<nav id="navigationBar">
+						<ul>
+							<li>Navigation: <a href="web address">Upload Form</a></li>
+							<li><a href="web address">Document List</a></li>
+							<li><a href="web address">User List</a></li>
+						</ul>
+				</nav>
+			</div>
+			<div id="mainContent">
+
+<!--			<p>		-->
+				I want to: 
+					</br>
+					<form>
+						<input type="radio" name="user" value="recruiter" onclick="toggle(this)" />Hire Talent<br>
+						<input type="radio" name="user" value="jobseeker" onclick="toggle(this)" />Find a Job<br>
+					</form>
+<!--			</p>	-->
+
+				<p>Email: 
+					</br>
+					<input type="email" placeholder="example@example.com" name="email">
+				</p>
+
+<!--			<p>Job Title: <input type="text" name="title" placeholder="Text"/> </p>		-->
+
+				<style type='text/css'>#indJobContent{padding-bottom: 5px;}#indJobContent .company_location{font-size: 11px;overflow: hidden;display:block;}#indJobContent.wide .job{display:block;float:left;margin-right: 5px;width: 135px;overflow: hidden}#indeed_widget_wrapper{position: relative;font-family: 'Helvetica Neue',Helvetica,Arial,sans-serif;font-size: 13px;font-weight: normal;line-height: 18px;padding: 10px;height: auto;overflow: hidden;}#indeed_widget_header{font-size:18px; padding-bottom: 5px; }#indeed_search_wrapper{clear: both;font-size: 12px;margin-top: 0px;padding-top: 2px;}#indeed_search_wrapper label{font-size: 12px;line-height: inherit;text-align: left; margin-right: 5px;}#indeed_search_wrapper input[type='text']{width: 100px; font-size: 11px; }#indeed_search_wrapper #qc{float:left;}#indeed_search_wrapper #lc{float:right;}#indeed_search_wrapper.stacked #qc, #indeed_search_wrapper.stacked #lc{float: none; clear: both;}#indeed_search_wrapper.stacked input[type='text']{width: 150px;}#indeed_search_wrapper.stacked label{display: block;padding-bottom: 5px;}#indeed_search_footer{width:295px; padding-top: 5px; clear: both;}#indeed_link{position: absolute;bottom: 1px;right: 5px;clear: both;font-size: 11px; }#indeed_link a{text-decoration: none;}#results .job{padding: 1px 0px;}#pagination { clear: both; }</style><style type='text/css'>
+				#indeed_widget_wrapper{ width: 300px; height: 250px; background: #FFFFFF;}
+				#indeed_widget_wrapper{ border: 1px solid #DDDDDD; }
+				#indeed_widget_wrapper, #indeed_link a{ color: #000000;}
+				#indJobContent, #indeed_search_wrapper{ border-top: 1px solid #DDDDDD; }
+				#indJobContent a { color: #00c; }
+				#indeed_widget_header{ color: #000000; }
+				</style>
+
+				<script type='text/javascript'>
+					var ind_pub = '5347954861571823';
+					var ind_el = 'indJobContent';
+					var ind_pf = '';
+					var ind_q = 'Assistant';
+					var ind_l = '30035';
+					var ind_chnl = 'none';
+					var ind_n = 4;
+					var ind_d = 'http://www.indeed.com';
+					var ind_t = 40;
+					var ind_c = 30;
+					var ind_pgn = 1;
+					var ind_pgnCnt = 3;
+				</script>
+
+				<script type='text/javascript' src='http://www.indeed.com/ads/jobroll-widget-v3.js'></script>
+				<div id='indeed_widget_wrapper' style=''>
+					<div id='indeed_widget_header'>Jobs from Indeed</div>
+
+					<div id='indJobContent' class=""></div>
+
+					<div id='indeed_search_wrapper'>
+					<script type='text/javascript'>
+						function clearDefaults() {
+							var formInputs = document.getElementById('indeed_jobform').elements;
+							for(var i = 0; i < formInputs.length; i++) {
+								if(formInputs[i].value == 'title, keywords' || formInputs[i].value == 'city, state, or zip') {
+									formInputs[i].value = '';
+								}
+							}
+						}
+					</script>
+
+					<form onsubmit='clearDefaults();' method='get' action='http://www.indeed.com/jobs' id='indeed_jobform' target="_new">
+						<div id="qc"><label>What:</label><input type='text' onfocus='this.value=""' value='title, keywords' name='q' id='q'></div>
+						<div id="lc"><label>Where:</label><input type='text' onfocus='this.value=""' value='city, state, or zip' name='l' id='l'></div>
+						<div id='indeed_search_footer'>
+							<div style='float:left'><input type='submit' value='Find Jobs' class='findjobs'></div>
+						</div>
+						<input type='hidden' name='indpubnum' id='indpubnum' value='5347954861571823'>
+					</form>
+					</div>
+
+					<div id='indeed_link'>
+						<a title="Job Search" href="http://www.indeed.com/" target="_new">jobs by <img alt=Indeed src='http://www.indeed.com/p/jobsearch.gif' style='border: 0;vertical-align: bottom;'>
+						</a>
+					</div>
+				</div>
+
+				<p id="general">Resume/Job Description:
+					</br>
+					...
+				</p>
+				<form id = "uploadForm" method="post" enctype="multipart/form-data" action="/file-upload">
+				<p id="description" >Job Description:
+					<br>
+					<input type="text" name="resume" placeholder="Job Title"/>
+					<input type="file" id="files" name="files[]" multiple />
+					<output id="list"></output>
+				</p>
+
+				<p id="resume" >Resume:
+<!--				<input type="text" name="resume" placeholder="Select File"/>	-->
+					</br>
+					<input type="file" id="files" name="thumbnail" multiple />
+					<output id="list"></output>
+				</p>
+				
+				<p>File Type:
+					</br>
+					<select name="filetype">
+						<option value="pdf">PDF</option>
+						<option value="text">RTF</option>
+						<option value="word">Word Document</option>
+					</select>
+				</p>
+
+				<input id="Submit" type="submit" value="Submit">
+				<input type="reset" value="Clear">
+
+				</form>
+			</div>
+
+			<footer>
+				</br>
+				</br>
+				</br>
+				Evans & Chambers Technology, LLC © Copyright 2015
+			</footer>
+		</div>
+		<script type='text/javascript'>
+			function toggle(switchElement) {
+				var general = document.getElementById('general');
+				var genDisplaySetting = general.style.display;
+
+				var recruiter = document.getElementById('description');
+				var recDisplaySetting = recruiter.style.display;
+
+				var jobseeker = document.getElementById('resume');
+				var jobDisplaySetting = jobseeker.style.display;
+
+				if (switchElement.value == 'recruiter') {
+					general.style.display = 'none';
+					recruiter.style.display = 'block';
+					jobseeker.style.display = 'none';
+				}
+				else if (switchElement.value =='jobseeker') {
+					general.style.display = 'none';
+					recruiter.style.display = 'none';
+					jobseeker.style.display = 'block';
+				}
+			};
+
+			function handleFileSelect(evt) {
+    			var files = evt.target.files; // FileList object
+
+    			// files is a FileList of File objects. List some properties.
+    			var output = [];
+    			for (var i = 0, f; f = files[i]; i++) {
+      					output.push('<li><strong>', escape(f.name), '</strong> (', f.type || 'n/a', ') - ',
+                		f.size, ' bytes, last modified: ',
+                  		f.lastModifiedDate ? f.lastModifiedDate.toLocaleDateString() : 'n/a',
+                  		'</li>');
+    			}
+    			document.getElementById('list').innerHTML = '<ul>' + output.join('') + '</ul>';
+			};
+			document.getElementById('files').addEventListener('change', handleFileSelect, false);
+			document.getElementById('files').addEventListener('change', handleFileSelect, false);
+
+//function submit() {
+	// Add functionality to check if info was submitted to bucket/db successfully or unsuccessfully
+	//alert("Submitted successfully!");
+//};
+
+		</script>
