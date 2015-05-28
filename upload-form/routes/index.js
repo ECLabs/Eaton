@@ -10,9 +10,6 @@ var bucketName = 'eaton-resume-bucket';
 
 router.use(multer({ 
 	dest: './uploads/',
-	rename: function (fieldname, filename) {
-		return filename + Date.now();
-	},
 	onFileUploadStart: function (file, data, req, res) {
 		console.log(file.originalname + ' is starting ...')
 		var params = {
