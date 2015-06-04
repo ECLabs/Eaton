@@ -20,6 +20,7 @@ function toggle(switchElement) {
 	}
 };
 
+
 function handleFileSelect(evt) {
     var files = evt.target.files; // FileList object
 
@@ -40,3 +41,5 @@ document.getElementById('files').addEventListener('change', handleFileSelect, fa
 	// Add functionality to check if info was submitted to bucket/db successfully or unsuccessfully
 	//alert("Submitted successfully!");
 //};
+
+
