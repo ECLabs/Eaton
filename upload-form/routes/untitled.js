@@ -3,17 +3,14 @@ var router = express.Router();
 var multer = require('multer');
 var done = false;
 var AWS = require('aws-sdk');
+AWS.config.loadFromPath('./aws.milesplit.json');
 var dd = new AWS.DynamoDB();
 var s3 = new AWS.S3();
+
 var bucketName = 'eaton-resume-bucket';
 
-
-AWS.config.update({region:'us-east-1'});
 router.use(multer({ 
 	dest: './uploads/',
-	rename: function(fieldname, filename){
-		return filename;
-	},
 	onFileUploadStart: function (file, data, req, res) {
 		console.log(file.originalname + ' is starting ...')
 		var params = {
@@ -27,6 +24,7 @@ router.use(multer({
 			} else {
 				console.log("Successfully uploaded data to Eaton Resume Bucket");
 			}
+
 		});
 	},
 	onFileUploadComplete: function(file) {
@@ -41,13 +39,6 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Upload Form' });
 });
 
-/* GET testing dynamodb upload. */
-router.get('/dynamodb-put', function(req, res, next) {
-	console.log("entering function");
-  putItem("test@email.com", "6/5/2015", "Recruiter", "101");
-  console.log("Successfully Uploaded");
-});
-
 router.post('/', function(req, res){
 	if(done == true){
 		console.log(req.files);
@@ -56,7 +47,6 @@ router.post('/', function(req, res){
 });
 
 module.exports = router;
-
 
 var tableName = 'eaton-user-db';
   putItem = function(userEmail, dateCreated, userRole, userID) {
@@ -69,14 +59,13 @@ var tableName = 'eaton-user-db';
       };
      
      dd.putItem({
-         'TableName': 'eaton-user-db',
-         'Item': item,
+         tableName: 'eaton-user-db',
+         'Item': item;
          'Expected': {
-         	userEmail: {'Exists' : false}
+         	userEmail: {'Exist' : false}
          }
       }, function(err, data) {
          err && console.log(err);
       });
    };
-
 
