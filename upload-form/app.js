@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var hbars = require('express3-handlebars');  
 
 var routes = require('./routes/index');
+var documentList = require('./routes/document-list');
 
 var app = express();
 
@@ -58,5 +59,3 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
-console.log("listening on port 8000");
-app.listen(8000);

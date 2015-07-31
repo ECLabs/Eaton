@@ -1,4 +1,4 @@
-var express = require('express');
+/*var express = require('express');
 var router = express.Router();
 var multer = require('multer');
 var done = false;
@@ -34,7 +34,7 @@ router.use(multer({
 	}
 }));
 
-/* GET home page. */
+ GET home page. 
 router.get('/', function(req, res, next) {
   res.render('index', { title: 'Upload Form' });
 });
@@ -67,5 +67,5 @@ var tableName = 'eaton-user-db';
       }, function(err, data) {
          err && console.log(err);
       });
-   };
+   };*/
 

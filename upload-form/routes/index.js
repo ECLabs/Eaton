@@ -1,13 +1,15 @@
 var express = require('express');
 var router = express.Router();
 var multer = require('multer');
-var done = false;
+var moment = require('moment');
 var AWS = require('aws-sdk');
 AWS.config.update({'region': 'us-east-1'});
-var dd = new AWS.DynamoDB();
+var dynamoDB = new AWS.DynamoDB();
 var s3 = new AWS.S3();
 var bucketName = 'eaton-resume-bucket';
-
+var date = moment().format("MM-DD-YYYY");
+var emailExists;
+var userID;
 
 router.use(multer({ 
 	dest: './uploads/',
@@ -15,26 +17,107 @@ router.use(multer({
 		return filename;
 	},
 	onFileUploadStart: function (file, data, req, res) {
-		console.log(file.originalname + ' is starting ...')
-		var params = {
+		var email = req.req.body.email;
+		var fileType = file.extension;
+		var jobTitle = req.req.body.jobTitle;
+		var fileLink = "https://s3.amazonaws.com/eaton-resume-bucket/" + file.name;
+		var userRole = req.req.body.user;
+		var s3params = {
 			Bucket: bucketName,
 			Key: file.name,
 			Body: data
 		};
-		s3.putObject(params, function(perr, pres){
-			if (perr){
-				console.log("Error uploading data: ", perr);
-			} else {
-				console.log("Successfully uploaded data to Eaton Resume Bucket");
+		
+		var checkEmail = {
+			"TableName": 'eaton-user-db',
+			"Key": {
+				"userEmail": {"S": email},
+			}
+		};
+		var userParams = {
+			"TableName": 'eaton-user-db',
+			"Item": {
+				"userEmail": {"S": email},
+				"userID": {"S": email},
+				"dateCreated": {"S": date},
+				"userRole": {"S": userRole}
+			}
+		};
+		var resumeParams = {
+			"TableName": 'eaton-resume-db',
+			"Item": {
+				"User ID": {"S": email},
+				"File Type": {"S": fileType},
+				"Job Title": {"S": jobTitle},
+				"Record Create Date": {"S": date},
+				"URL": {"S": fileLink}
+			}
+		}
+
+		var jobParams = {
+			"TableName": 'eaton-jobdescription-db',
+			"Item": {
+				"User ID": {"S": email},
+				"File Type": {"S": fileType},
+				"Job Title": {"S": jobTitle},
+				"Job Description ID": {"S": "x"},
+				"Date Created": {"S": date},
+				"URL Address": {"S": fileLink}
+			}
+		}
+		var emailExists = false;
+		dynamoDB.getItem(checkEmail, function(err, data){
+			if(data.Item === undefined){
+				console.log('Upload is starting ...');
+				dynamoDB.putItem(userParams, function(err, data){
+					if(err){
+						console.log(err, err.stack);
+					}
+					else {
+						console.log("Successfully added item to table");
+					}
+				});
+			}
+			else {
+				console.log("Email already exists");
+				console.log(data);
+				var x = data.Item.userID.S;
+				console.log(x);
+				emailExists = true;
+				return;
 			}
 		});
-	},
-	onFileUploadComplete: function(file, req, res) {
-		console.log(file.fieldname + ' uploaded to ' + file.path)
-		done = true;
-		var today = new Date();
-		console
-		putItem("test@email.com", "6/5/2015", "Recruiter", "101");
+		
+		dynamoDB.putItem(resumeParams, function(err, data){
+			if(err){
+				console.log(err, err.stack);
+			}
+			else {
+				console.log("Successfully added item to table");
+			}
+		});
+		dynamoDB.putItem(jobParams, function(err, data){
+			if(err){
+				console.log(err, err.stack);
+			}
+			else {
+				console.log("Successfully added item to table");
+			}
+		});
+		console.log(emailExists);
+		if(emailExists === false){
+			s3.putObject(s3params, function(perr, pres){
+				if (perr){
+					console.log("Error uploading data: ", perr);
+				} else {
+					console.log("Successfully uploaded data to Eaton Resume Bucket");
+				}
+			});
+		}
+		else{
+			console.log("File exists already");
+		}
+		
 	}
 }));
 
@@ -43,43 +126,10 @@ router.get('/', function(req, res, next) {
   res.render('index', { title: 'Upload Form' });
 });
 
-/* GET testing dynamodb upload. */
-router.get('/dynamodb-put', function(req, res, next) {
-	console.log("entering function");
-  	putItem("newtest@email.com", "6/5/2015", "Recruiter", "101");
-  	console.log("Successfully Uploaded");
-  	res.send("Success");
-});
-
 router.post('/', function(req, res){
-	if(done == true){
-		console.log(req.files);
+		//console.log(req.files);
+		//console.log(req.body);
 		res.end("File uploaded.");
-	}
 });
 
 module.exports = router;
-
-
-var tableName = 'eaton-user-db';
-  putItem = function(userEmail, dateCreated, userRole, userID) {
-     var item = {
-        'userEMail': { 'S': userEmail },
-        'userID' : {'S': userID},
-        'dateCreated' : { 'S': dateCreated },
-      	'userRole' : { 'S': userRole },
-      	'helloWorld' : { 'S': '123'},
-     	'userID' : { 'S': userID },
-     	'Email Address': {'S': userEmail}
-      };
-
-     dd.putItem({
-         'TableName': 'eaton-user-db',
-         'Item': item,
-         'Expected': {
-         	userEmail: {'Exists' : false}
-         }
-      }, function(err, data) {
-         err && console.log(err);
-      });
-   };
