@@ -29,14 +29,16 @@ router.use(multer({
 		};
 		
 		var checkEmail = {
-			"TableName": 'eaton-user-db',
 			"Key": {
-				"userEmail": {"S": email},
-			}
+				"Table": {"S": "User"},
+				"userEmail": {"S": email}
+			},
+			"TableName": 'eaton-user-db',
 		};
 		var userParams = {
 			"TableName": 'eaton-user-db',
 			"Item": {
+				"Table": {"S": "User"},
 				"userEmail": {"S": email},
 				"userID": {"S": email},
 				"dateCreated": {"S": date},
@@ -61,13 +63,13 @@ router.use(multer({
 				"File Type": {"S": fileType},
 				"Job Title": {"S": jobTitle},
 				"Job Description ID": {"S": "x"},
-				"Date Created": {"S": date},
+				"Datde Created": {"S": date},
 				"URL Address": {"S": fileLink}
 			}
 		}
 		var emailExists = false;
 		dynamoDB.getItem(checkEmail, function(err, data){
-			if(data.Item === undefined){
+			if(Object.keys(data).length < 1){
 				console.log('Upload is starting ...');
 				dynamoDB.putItem(userParams, function(err, data){
 					if(err){
@@ -80,44 +82,39 @@ router.use(multer({
 			}
 			else {
 				console.log("Email already exists");
-				console.log(data);
-				var x = data.Item.userID.S;
-				console.log(x);
 				emailExists = true;
 				return;
 			}
-		});
-		
-		dynamoDB.putItem(resumeParams, function(err, data){
-			if(err){
-				console.log(err, err.stack);
-			}
-			else {
-				console.log("Successfully added item to table");
-			}
-		});
-		dynamoDB.putItem(jobParams, function(err, data){
-			if(err){
-				console.log(err, err.stack);
-			}
-			else {
-				console.log("Successfully added item to table");
-			}
-		});
-		console.log(emailExists);
-		if(emailExists === false){
-			s3.putObject(s3params, function(perr, pres){
-				if (perr){
-					console.log("Error uploading data: ", perr);
-				} else {
-					console.log("Successfully uploaded data to Eaton Resume Bucket");
+			dynamoDB.putItem(resumeParams, function(err, data){
+				if(err){
+					console.log(err, err.stack);
+				}
+				else {
+					console.log("Successfully added item to table");
 				}
 			});
-		}
-		else{
-			console.log("File exists already");
-		}
-		
+			dynamoDB.putItem(jobParams, function(err, data){
+				if(err){
+					console.log(err, err.stack);
+				}
+				else {
+					console.log("Successfully added item to table");
+				}
+			});
+			console.log(emailExists);
+			if(emailExists === false){
+				s3.putObject(s3params, function(perr, pres){
+					if (perr){
+						console.log("Error uploading data: ", perr);
+					} else {
+						console.log("Successfully uploaded data to Eaton Resume Bucket");
+					}
+				});
+			}
+			else{
+				console.log("File exists already");
+			}
+		});
 	}
 }));
 
@@ -127,8 +124,6 @@ router.get('/', function(req, res, next) {
 });
 
 router.post('/', function(req, res){
-		//console.log(req.files);
-		//console.log(req.body);
 		res.end("File uploaded.");
 });
 

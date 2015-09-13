@@ -8,6 +8,7 @@ var hbars = require('express3-handlebars');
 
 var routes = require('./routes/index');
 var documentList = require('./routes/document-list');
+var userList = require('./routes/user-list');
 
 var app = express();
 
@@ -25,6 +26,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/documents', documentList);
+app.use('/users', userList);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
