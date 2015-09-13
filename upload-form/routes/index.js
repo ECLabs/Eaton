@@ -10,6 +10,9 @@ var bucketName = 'eaton-resume-bucket';
 var date = moment().format("MM-DD-YYYY");
 var emailExists;
 var userID;
+var winston = require('winston');
+
+
 
 router.use(multer({ 
 	dest: './uploads/',
@@ -25,8 +28,15 @@ router.use(multer({
 		var s3params = {
 			Bucket: bucketName,
 			Key: file.name,
-			Body: data
-		};
+			Body: data,};
+
+
+		winston.add(winston.transports.File, { filename:"resultsFile.log"});
+		winston.info('Date Created', {timestamp: date});
+		winston.info('Email', email),
+		winston.info('Job Title', jobTitle),
+		winston.info('User Role', userRole);
+		
 		
 		var checkEmail = {
 			"Key": {
@@ -117,6 +127,8 @@ router.use(multer({
 		});
 	}
 }));
+
+
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
