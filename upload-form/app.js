@@ -17,6 +17,8 @@ app.set('views', path.join(__dirname, 'views'));
 app.engine('handlebars', hbars({defaultLayout: 'main'}));
 app.set('view engine', 'handlebars');
 
+
+
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
 app.use(logger('dev'));

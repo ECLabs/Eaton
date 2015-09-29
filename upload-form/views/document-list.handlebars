@@ -1,6 +1,25 @@
 <table border="3">
-   <tr><td>ID</td><td>Source</td><td>Role</td><td>DocType</td><td>FileType</td><td>Date Created</td></tr>
-   <tr><td>1</td><td>Row 2, Cell 2</td><td>Row 2, Cell 3</td><td>Row 2, Cell 3</td><td>Row 2, Cell 4</td><td>Row 2, Cell 5</td></tr>
-   <tr><td>2</td><td>Row 3, Cell 2</td><td>Row 3, Cell 3</td><td>Row 3, Cell 3</td><td>Row 3, Cell 4</td><td>Row 3, Cell 5</td></tr>
-   <tr><td>3</td><td>Row 4, Cell 2</td><td>Row 4, Cell 3</td><td>Row 4, Cell 3</td><td>Row 4, Cell 4</td><td>Row 4, Cell 5</td></tr>
+	<thead>
+		<tr>
+			<th>DocumentID</th>
+         	<th>Source</th>
+         	<th>Role</th>
+            <th>Type</th>
+         	<th>FileType</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{#myDocuments}}
+        <tr>
+        {{#each this}}
+            <td>{{this.S}}</td>
+        {{/each}}
+        </tr>
+        <tr
+    {{/myDocuments}}
+    </tbody>			   
 </table>
+
+<script>
+    console.log({{{myDocuments}}});
+</script>

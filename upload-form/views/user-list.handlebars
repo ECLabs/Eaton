@@ -1,6 +1,24 @@
 <table border="3">
-   <tr><td>ID</td><td>Email</td><td>Date Created</td></tr>
-   <tr><td>1</td><td>Row 2, Cell 2</td><td>Row 2, Cell 3</td></tr>
-   <tr><td>2</td><td>Row 3, Cell 2</td><td>Row 3, Cell 3</td></tr>
-   <tr><td>3</td><td>Row 4, Cell 2</td><td>Row 4, Cell 3</td></tr>				   
+	<thead>
+		<tr>
+			<th>Email</th>
+         	<th>User Role</th>
+         	<th>Date Created</th>
+        </tr>
+    </thead>
+    <tbody>
+    {{#myUsers}}
+        <tr>
+        {{#each this}}
+            <td>{{this.S}}</td>
+        {{/each}}
+        </tr>
+        <tr
+    {{/myUsers}}
+    </tbody>	
+    			   
 </table>
+
+<script>
+	console.log({{{myUsers}}});
+</script>

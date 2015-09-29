@@ -66,7 +66,7 @@
 
 				<p>Email: 
 					</br>
-					<input type="email" placeholder="example@example.com" name="email">
+					<input id="userEmail" type="email" placeholder="example@example.com" name="email">
 				</p>
 
 <!--			<p>Job Title: <input type="text" name="jobTitle" placeholder="Text"/> </p>		-->
@@ -78,18 +78,15 @@
 				</p>
 				
 				<p id="description" >Job Description:
-					<br>
-					<input type="text" name="resume" placeholder="Job Title"/>
-					<input type="file" id="files" name="files[]" multiple />
-					<output id="list"></output>
+					<input type="text" name="jobDescription" placeholder="Ex. Junior Developer"/>
 				</p>
 
-				<p id="resume" >Resume:
-					<input type="text" name="jobTitle" placeholder="Desired Job Title"/>
-<!--				<input type="text" name="resume" placeholder="Select File"/>	-->
-					<input type="file" id="files" name="thumbnail" multiple />
-					<output id="list"></output>
+				<p id="resume" >Desired Job Title:
+					<input type="text" name="jobTitle" placeholder="Ex. Junior Developer"/>
 				</p>
+
+				<input type="file" id="files" name="myUpload" multiple />
+				<output id="list"></output>
 				
 				<p>File Type:
 					</br>
