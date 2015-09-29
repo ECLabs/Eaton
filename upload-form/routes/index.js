@@ -8,6 +8,7 @@ var s3 = new AWS.S3();
 var dynamoDB = new AWS.DynamoDB();
 var bucketName = 'eaton-resume-bucket';
 var date = moment().format("MM-DD-YYYY");
+var date2 = moment().format("MM-DD-YYYY, h:mm:ss a");
 var emailExists;
 var userID;
 var winston = require('winston');
@@ -37,11 +38,7 @@ router.post('/', upload.single('myUpload'), function(req, res){
 	var jobTitle;
 	var fileLink = "https://s3.amazonaws.com/eaton-resume-bucket/" + urlName;
 	
-	/*winston.add(winston.transports.File, { filename:"resultsFile.log"});
-	winston.info('Date Created', {timestamp: moment().format("MM-DD-YYYY, h:mm:ss a")});
-	winston.info('Email', email),
-	winston.info('Job Title', jobTitle),
-	winston.info('User Role', userRole);*/
+	
 
 	if(userRole == 'jobseeker'){
 		jobTitle = req.body.jobTitle;
@@ -60,10 +57,14 @@ router.post('/', upload.single('myUpload'), function(req, res){
 		fileType = 'rtf';
 	}
 	else {
-		fileType = 'to be determined';
+		fileType = 'unknown fileType';
 	}
 
-	console.log(fileType);
+	winston.add(winston.transports.File, { filename:"resultsFile.log"});
+	winston.info('Date Created', {timestamp: date2});
+	winston.info('Email', email),
+	winston.info('Job Title', jobTitle),
+	winston.info('User Role', userRole);
 		
 	var checkEmail = {
 		"Key": {
@@ -121,7 +122,7 @@ router.post('/', upload.single('myUpload'), function(req, res){
 				else {
 					console.log("Successfully added item to User table");
 				}
-			});	
+			});
 		}
 		else {
 			console.log("Email already exists");

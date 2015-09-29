@@ -30,9 +30,7 @@ router.get('/', function(req, res, next){
 		}
 		else{
 			myData = data.Items;
-			console.log(myData);
 		}
-		//console.log(myData);
 		res.render('user-list', { title: 'List of Users', "myUsers": myData});
 	});
 
