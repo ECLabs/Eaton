@@ -11,15 +11,12 @@
     <tbody>
     {{#myDocuments}}
         <tr>
-        {{#each this}}
-            <td>{{this.S}}</td>
-        {{/each}}
+            <td>{{this.userEmail.S}}</td>
+            <td>{{this.userID.S}}</td>
+            <td>{{this.Table.S}}</td>
+            <td>{{this.userRole.S}}</td>
+            <td><a href='{{this.URL.S}}'>File Link</a></td>
         </tr>
-        <tr
     {{/myDocuments}}
     </tbody>			   
 </table>
-
-<script>
-    console.log({{{myDocuments}}});
-</script>

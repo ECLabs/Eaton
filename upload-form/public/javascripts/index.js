@@ -29,8 +29,10 @@ $(document).ready(function(){
 			},
 			success: function(response){
 				console.log(response);
-				console.log(document.getElementById('userEmail'));
-				alert("File Upload Successful");
+				if(alert("File Upload Successful")){}
+				else{
+					window.location.reload();
+				}    
 			}
 		});
 		//disable page refresh
