@@ -1,0 +1,15 @@
+{
+  "name": "Eaton",
+  "version": "1.0.0",
+  "description": "Insider risk profiler",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Ryan",
+  "license": "BSD-2-Clause",
+  "dependencies": {
+    "express": "~4.13.3",
+    "ws": "~0.7.2"
+  }
+}
