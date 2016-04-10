@@ -2,14 +2,12 @@
   "name": "Eaton",
   "version": "1.0.0",
   "description": "Insider risk profiler",
-  "main": "index.js",
   "scripts": {
-    "test": "test"
+    "start": "node app.js"
   },
   "author": "Ryan",
   "license": "BSD-2-Clause",
   "dependencies": {
-    "express": "~4.13.3",
-    "ws": "~0.7.2"
+    "express": "~4.13.3"
   }
 }
