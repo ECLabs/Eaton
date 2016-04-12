@@ -1,20 +1,31 @@
 <!DOCTYPE >
 <header>
 	<title>Eaton</title>
+	<link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
+	<link href="css/main.css" rel="stylesheet">
+	<script src="jquery-2.2.0.min.js"></script>
+	<script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
 </header>
 <body>
-	Insider's Name: <input type="text" />
-	<br />
-	Reporting Location: <input type="text" />
-	<br />
-	Arrival Time: <input type="text" />
-	<br />
-	Departure Time: <input type="text" />
-	<br />
-	<button>Submit</button>
-	<br />
-	<br />
-	Don't worry this will look like a real web application after the backend functionality is in place :)
-	<br />
-	FYI: This form is not functional yet...
+	<div id="form-background"></div>
+	<div class="header flex-container">
+		<img id="logo" src="images/plane.png" />
+		<h1>Travel Reporting System</h1>
+	</div>
+	<div class="input-group content">
+		<div class="flex-container">
+			<label>Traveler's Name: </label><input type="text" class="form-control" />
+		</div>
+		<div class="flex-container">
+			<label>Location: </label><input type="text" class="form-control" />
+		</div>
+		<div class="flex-container">
+			<label>Arrival Time: </label><input type="text" class="form-control" />
+		</div>
+		<div class="flex-container">
+			<label>Departure Time: </label><input type="text" class="form-control" />
+		</div>
+		<button class="btn btn-info">Submit</button>
+	</div>
 </body>

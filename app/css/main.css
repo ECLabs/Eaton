@@ -1,0 +1,63 @@
+body {
+	background-image: url("../images/cloud.jpg");
+}
+
+.header {
+    color: #46b8da;
+    position: relative;
+    z-index: 2;
+    font-family: 'Quicksand', sans-serif;
+    width: 70%;
+    margin: 0 auto;
+    max-width: 82rem;
+}
+
+#logo {
+	height:10rem;
+	margin-right: 6rem;
+}
+
+#form-background {
+    position: absolute;
+    background-color: white;
+    left: 0;
+    right: 0;
+    margin: 0 auto;
+    top: -5rem;
+    border-radius: 3rem;
+    z-index: 1;
+    width: 75%;
+    height: 62%;
+}
+
+.content {
+	z-index: 2;
+    position: relative;
+    margin: 0 auto;
+    width: 67%;
+    max-width: 86rem;
+}
+
+.flex-container {
+	display: flex;
+	margin-top: 3rem;
+}
+
+.flex-container input {
+	flex: 4;
+	border-radius: 6px !important;
+	height: 4rem;
+}
+
+.flex-container label {
+	flex: 1;
+	padding-top:1rem;
+}
+
+.content button {
+    margin-top: 3rem;
+    padding: 1.2rem;
+    width: 12rem;
+    position: absolute;
+    right: 0;
+}
