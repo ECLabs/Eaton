@@ -1,15 +1,21 @@
 body {
-	background-image: url("../images/cloud.jpg");
+	background-image: url("../images/map.jpg");
 }
 
 .header {
-    color: #46b8da;
+	background-color: white;
+	z-index: 2;
     position: relative;
-    z-index: 2;
+}
+
+.header center{
+	color: #DD697E;
     font-family: 'Quicksand', sans-serif;
-    width: 70%;
+    width: 67%;
     margin: 0 auto;
-    max-width: 82rem;
+    padding-top: 1px;
+    padding-bottom: 3rem;
+    max-width: 86rem;
 }
 
 #logo {
@@ -18,21 +24,26 @@ body {
 }
 
 #form-background {
-    position: absolute;
+	position: absolute;
     background-color: white;
-    left: 0;
-    right: 0;
-    margin: 0 auto;
-    top: -5rem;
-    border-radius: 3rem;
+    top: 0;
     z-index: 1;
-    width: 75%;
-    height: 62%;
+    opacity: 0.6;
+    width: 100%;
+    bottom: 0;
 }
 
 .content {
-	z-index: 2;
+    background-color: white;
+    width: 100%;
+    margin-top: 14rem;
+    padding-bottom: 11rem;
+    padding-top: 2rem;
+    z-index: 2;
     position: relative;
+}
+
+.content .input-group{
     margin: 0 auto;
     width: 67%;
     max-width: 86rem;

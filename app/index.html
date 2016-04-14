@@ -1,31 +1,41 @@
 <!DOCTYPE >
-<header>
+<head>
 	<title>Eaton</title>
 	<link href="bootstrap-3.3.6-dist/css/bootstrap.min.css" rel="stylesheet">
 	<link href='https://fonts.googleapis.com/css?family=Quicksand' rel='stylesheet' type='text/css'>
 	<link href="css/main.css" rel="stylesheet">
+	<link href="css/datepicker.css" rel="stylesheet">
+	<link href="less/datepicker.less" rel="stylesheet">
 	<script src="jquery-2.2.0.min.js"></script>
 	<script src="bootstrap-3.3.6-dist/js/bootstrap.min.js"></script>
-</header>
+	<script src="js/main.js"></script>
+	<script src="js/bootstrap-datepicker.js"></script>
+</head>
 <body>
 	<div id="form-background"></div>
-	<div class="header flex-container">
-		<img id="logo" src="images/plane.png" />
-		<h1>Travel Reporting System</h1>
+	<div class="header">
+		<center>
+			<div class="flex-container">
+				<img id="logo" src="images/congress_seal.png" />
+				<h1>Personal Travel Reporting System</h1>
+			</div>
+		</center>
 	</div>
-	<div class="input-group content">
-		<div class="flex-container">
-			<label>Traveler's Name: </label><input type="text" class="form-control" />
+	<div class="content">
+		<div class="input-group">
+			<div class="flex-container">
+				<label>Traveler's Name: </label><input id="name" type="text" class="form-control" />
+			</div>
+			<div class="flex-container">
+				<label>Location: </label><input id="location" type="text" class="form-control" />
+			</div>
+			<div class="flex-container">
+				<label>Arrival: </label><input id="arrival-time" type="text" class="form-control" />
+			</div>
+			<div class="flex-container">
+				<label>Departure: </label><input id="departure-time" type="text" class="form-control" />
+			</div>
+			<button id="submit-button" class="btn btn-info">Submit</button>
 		</div>
-		<div class="flex-container">
-			<label>Location: </label><input type="text" class="form-control" />
-		</div>
-		<div class="flex-container">
-			<label>Arrival Time: </label><input type="text" class="form-control" />
-		</div>
-		<div class="flex-container">
-			<label>Departure Time: </label><input type="text" class="form-control" />
-		</div>
-		<button class="btn btn-info">Submit</button>
 	</div>
 </body>
