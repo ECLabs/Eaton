@@ -2,6 +2,7 @@ var express = require('express');
 var AWS = require('aws-sdk'); 
 var http = require('http');
 var qs = require('querystring');
+var datalayer = require('./datalayer');
 
 AWS.config.update({region:'us-east-1'});
 var dynamodb = new AWS.DynamoDB();
@@ -20,11 +21,9 @@ app.get('/heartbeat', function (req, res) {
 });
 
 /*
- * Add /heatbeat to base url to see if application is running
+ * Form submission
  */
 app.post('/submit', function (req, res) {
-  //TODO add database queries and anything else to exercise all third party communications to provide a better check
-  
   var body = '';
   
   req.on('data', function (data) {
@@ -33,9 +32,39 @@ app.post('/submit', function (req, res) {
   
   req.on('end', function(){
   	var result = qs.parse(body);
-  	console.log(result)
+  	
+  	if(result.name != undefined){
+  		datalayer.addTravelRecord(result);
+  		datalayer.getHistory(result.name, res);
+  	}else{
+  		res.send("error: name is undefined");
+  	}
+  	
+  	console.log(result);
   });
-  res.send('WOrked');
+});
+
+/*
+ * History retrieval
+ */
+app.post('/history', function (req, res) {
+  var body = '';
+  
+  req.on('data', function (data) {
+  	body += data;
+  });
+  
+  req.on('end', function(){
+  	var result = qs.parse(body);
+  	
+  	if(result.name != undefined){
+  		datalayer.getHistory(result.name, res);
+  	}else{
+  		res.send("error: name is undefined");
+  	}
+  	
+  	console.log(result);
+  });
 });
 
 http.createServer(app).listen(app.get('port'), function(){

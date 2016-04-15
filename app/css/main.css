@@ -9,7 +9,7 @@ body {
 }
 
 .header center{
-	color: #DD697E;
+	color: #d02f4d;
     font-family: 'Quicksand', sans-serif;
     width: 67%;
     margin: 0 auto;
@@ -37,18 +37,30 @@ body {
     background-color: white;
     width: 100%;
     margin-top: 14rem;
-    padding-bottom: 11rem;
+    padding-bottom: 2rem;
     padding-top: 2rem;
     z-index: 2;
     position: relative;
+    height: 45rem;
 }
 
-.content .input-group{
+.content .input-group,.nav,.list-group {
     margin: 0 auto;
     width: 67%;
     max-width: 86rem;
 }
 
+.content .list-group li {
+	box-shadow:0px 3px 5px -2px #ccc;
+	margin-top:0.7rem;
+	border-radius:4px;
+}
+
+.content .list-group {
+	height: 88%;
+	overflow:auto;
+}
+	
 .flex-container {
 	display: flex;
 	margin-top: 3rem;
@@ -65,10 +77,21 @@ body {
 	padding-top:1rem;
 }
 
+.flex-container p {
+	flex: 1;
+}
+
 .content button {
     margin-top: 3rem;
     padding: 1.2rem;
     width: 12rem;
     position: absolute;
     right: 0;
+}
+
+#user {
+	position:absolute;
+	top:0;
+	right:0;
+	z-index: 2;
 }
