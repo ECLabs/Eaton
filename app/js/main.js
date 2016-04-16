@@ -1,3 +1,6 @@
+var baseUrl = 'http://ectechnology-eaton.us-east-1.elasticbeanstalk.com/';
+var port = ':3000/';
+
 $(document).ready(function(){
 	$(".content .list-group").hide();
 	
@@ -72,7 +75,7 @@ function submit(){
 	$("#history").click();
 	
 	var request = $.ajax({
-	  url: "http://0.0.0.0:3000/submit",
+	  url: baseUrl+port+"submit",
 	  method: "POST",
 	  data: form
 	});
@@ -93,7 +96,7 @@ function submit(){
 
 function getHistory(name){
 	var request = $.ajax({
-	  url: "http://0.0.0.0:3000/history",
+	  url: baseUrl+port+"history",
 	  method: "POST",
 	  data: {"name":name}
 	});

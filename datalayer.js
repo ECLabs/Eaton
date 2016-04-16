@@ -1,7 +1,7 @@
 // datalayer.js
 // ============
 var AWS = require('aws-sdk'); 
-AWS.config.update({ accessKeyId: "AKIAIFEJDU4ZOMYYT4FQ", secretAccessKey: "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", region: "us-east-1" });
+AWS.config.update({ region: "us-east-1" });
 var dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
 module.exports = {
