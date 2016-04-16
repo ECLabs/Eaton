@@ -24,6 +24,42 @@ $(document).ready(function(){
 	});
 	
 	setupDatePickers();
+	
+	getHistory("Bernie Sanders");
+	
+	var substringMatcher = function(strs) {
+	  return function findMatches(q, cb) {
+	    var matches, substringRegex;
+	
+	    // an array that will be populated with substring matches
+	    matches = [];
+	
+	    // regex used to determine if a string contains the substring `q`
+	    substrRegex = new RegExp(q, 'i');
+	
+	    // iterate through the pool of strings and for any string that
+	    // contains the substring `q`, add it to the `matches` array
+	    $.each(strs, function(i, str) {
+	      if (substrRegex.test(str)) {
+	        matches.push(str);
+	      }
+	    });
+	
+	    cb(matches);
+	  };
+	};
+
+	var people = ['Bernie Sanders', 'Ted Cruz'];
+
+	$('.typeahead').typeahead({
+	  hint: true,
+	  highlight: true,
+	  minLength: 1
+	},
+	{
+	  name: 'people',
+	  source: substringMatcher(people)
+	});
 });
 
 function submit(){
@@ -32,6 +68,9 @@ function submit(){
 	form.location = $("#location").val();
 	form.arrival = $("#arrival").val();
 	form.departure = $("#departure").val();
+	
+	$("#history").click();
+	
 	var request = $.ajax({
 	  url: "http://0.0.0.0:3000/submit",
 	  method: "POST",
@@ -44,6 +83,7 @@ function submit(){
 	  for(var i=0; i<msg.length; i++){
 	  	addHistoryRow(msg[i]);
 	  }
+	  $("#user").val(msg[0].name.S);
 	});
 	 
 	request.fail(function( jqXHR, textStatus ) {
@@ -64,6 +104,7 @@ function getHistory(name){
 	  for(var i=0; i<msg.length; i++){
 	  	addHistoryRow(msg[i]);
 	  }
+	  $("#user").val(msg[0].name.S);
 	});
 	 
 	request.fail(function( jqXHR, textStatus ) {
@@ -94,7 +135,13 @@ function setupDatePickers(){
 }
 
 function addHistoryRow(json){
-	var row = '<li class="list-group-item flex-container"><p>'+json.name+'</p><p>'+json.location+'</p><p>'+json.arrival+'</p><p>'+json.departure+'</p></li>';
+	var arrival = new Date(parseInt(json.arrival.N));
+	var departure = new Date(parseInt(json.departure.N));
+	
+	var row = '<li class="list-group-item flex-container"><p>'+json.name.S+'</p><p>'+json.location.S+'</p><p>Arrival: '+
+	(arrival.getMonth() + 1) + '/' + arrival.getDate() + '/' +  arrival.getFullYear()+'</p><p>Departure: '+
+	(departure.getMonth() + 1) + '/' + departure.getDate() + '/' +  departure.getFullYear()+'</p></li>';
+	
 	$(".content .list-group").append(row);
 }
 

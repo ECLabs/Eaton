@@ -1,12 +1,7 @@
 var express = require('express');
-var AWS = require('aws-sdk'); 
 var http = require('http');
 var qs = require('querystring');
 var datalayer = require('./datalayer');
-
-AWS.config.update({region:'us-east-1'});
-var dynamodb = new AWS.DynamoDB();
-
 var app = express();
 
 app.set('port', process.env.PORT || 3000);
@@ -34,8 +29,7 @@ app.post('/submit', function (req, res) {
   	var result = qs.parse(body);
   	
   	if(result.name != undefined){
-  		datalayer.addTravelRecord(result);
-  		datalayer.getHistory(result.name, res);
+  		datalayer.addTravelRecord(result, res);
   	}else{
   		res.send("error: name is undefined");
   	}

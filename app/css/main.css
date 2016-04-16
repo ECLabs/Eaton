@@ -8,7 +8,7 @@ body {
     position: relative;
 }
 
-.header center{
+.header center {
 	color: #d02f4d;
     font-family: 'Quicksand', sans-serif;
     width: 67%;
@@ -70,6 +70,13 @@ body {
 	flex: 4;
 	border-radius: 6px !important;
 	height: 4rem;
+	padding: 6px;
+}
+
+.flex-container span {
+	flex: 4;
+	border-radius: 6px !important;
+	height: 4rem;
 }
 
 .flex-container label {
@@ -90,8 +97,21 @@ body {
 }
 
 #user {
-	position:absolute;
-	top:0;
-	right:0;
-	z-index: 2;
+	position: absolute;
+    top: 2px;
+    right: 0;
+    z-index: 2;
+    padding: 0.5rem;
+    background-color: white;
+    border-radius: 4px;
+    cursor:pointer;
+}
+
+.tt-menu {
+	border: 1px solid grey;
+	border-radius:4px;
+	padding:1rem;
+	width:100%;
+	margin-top:5px;
+	background-color:white;
 }
