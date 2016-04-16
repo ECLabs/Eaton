@@ -1,11 +1,16 @@
 var express = require('express');
 var http = require('http');
 var qs = require('querystring');
+var cors = require('cors');
+
+/* App files */ 
 var datalayer = require('./datalayer');
+
 var app = express();
 
 app.set('port', process.env.PORT || 8081);
 app.use(express.static('app'));
+app.use(cors());
 
 /*
  * Add /heatbeat to base url to see if application is running
