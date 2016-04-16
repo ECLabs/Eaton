@@ -1,4 +1,4 @@
-var baseUrl = 'http://ectechnology-eaton.us-east-1.elasticbeanstalk.com/';
+var baseUrl = 'http://ectechnology-eaton.us-east-1.elasticbeanstalk.com';
 var port = ':3000/';
 
 $(document).ready(function(){
