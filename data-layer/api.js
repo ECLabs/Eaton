@@ -1,30 +1,16 @@
-// datalayer.js
+// api.js
 // ============
+
 var AWS = require('aws-sdk'); 
 AWS.config.update({ region: "us-east-1" });
 var dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
 module.exports = {
-	getHistory: function (name, resp){
-		getHistoryFromDynamoDB(name, resp);
+	getTravelFeed: function (name, resp){
+		ggetTravelFeedFromDynamoDB(name, resp);
 	},
 	addTravelRecord: function (object, resp){
-		var params = {
-			"TableName":"eaton-travel-self-report",
-			"Item": {
-				"name":{"S":object.name},
-				"arrival":{"N":Date.parse(object.arrival).toString()},
-				"departure":{"N":Date.parse(object.departure).toString()},
-				"location":{"S":object.location}
-			}
-		};
-		dynamodb.putItem(params, function(err, data) {
-		  if (err) {
-		  	console.log(err, err.stack); 
-		  }else{
-		  	getHistoryFromDynamoDB(object.name, resp);
-		  }
-		});
+		addTravelRecordToDynamoDB(object, resp);
 	}
 };
 
