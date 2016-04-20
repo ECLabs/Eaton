@@ -2,11 +2,11 @@
 // ============
 var AWS = require('aws-sdk'); 
 AWS.config.update({ region: "us-east-1" });
-var dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
+var dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10', accessKeyId: "AKIAJBIDCSHBNGY6ECYA", secretAccessKey: "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"});
 
 module.exports = {
-	getHistory: function (name, resp){
-		getHistoryFromDynamoDB(name, resp);
+	getHistory: function (name, callback){
+		getHistoryFromDynamoDB(name, callback);
 	},
 	addTravelRecord: function (object, resp){
 		addTravelRecordToDynamoDB(object, resp);
@@ -17,7 +17,7 @@ module.exports = {
  * Private Methods
  */
 
-function getHistoryFromDynamoDB(name, resp){
+function getHistoryFromDynamoDB(name, callback){
 	var returnArray = [];
 		
 	var params = {
@@ -36,8 +36,8 @@ function getHistoryFromDynamoDB(name, resp){
 	  if (err){
 	  	console.log(err, err.stack); 
 	  } else{
-		resp.send(data.Items);
-	  }     
+		callback(data.Items);
+	  }    
 	});
 }
 

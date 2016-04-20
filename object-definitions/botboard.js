@@ -6,17 +6,9 @@ module.exports = {
 		var object = {};
 		
 		object.insider_name = "";
-		object.risk_scores = [];
+		object.risk_scores = newRiskScore();
 		object.tweets = [];
 		object.reported_travel = [];
-		
-		return object;
-	},
-	new_risk_score: function(){
-		var object = {};
-		
-		object.name = "";
-		object.value = 0;
 		
 		return object;
 	},
@@ -42,3 +34,15 @@ module.exports = {
 		return object;
 	},
 };
+
+function newRiskScore(){
+	var object = {};
+		
+	object.total = 0;
+	object.computer = 0;
+	object.finance = 0;
+	object.foreign_contacts = 0;
+	object.travel = 0;
+	
+	return object;
+}
