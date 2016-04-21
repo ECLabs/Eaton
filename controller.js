@@ -3,7 +3,7 @@
 
 /* Internal App Files */
 var data_persTravReport = require('./data-layer/pers-trav-report');
-var service_api = require('./service-layer/api');
+var service_insider_risk = require('./service-layer/insider-risk');
 
 module.exports = {
 	main: function(app){
@@ -65,7 +65,7 @@ module.exports = {
 		 * DEMO
 		 */
 		app.get('/api/demo', function (req, res) {
-			service_api.demo(res);
+			service_insider_risk.demo(res);
 		});
 	}
 };
