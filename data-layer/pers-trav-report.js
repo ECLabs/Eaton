@@ -2,14 +2,14 @@
 // ============
 var AWS = require('aws-sdk'); 
 AWS.config.update({ region: "us-east-1" });
-var dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10', accessKeyId: "AKIAJBIDCSHBNGY6ECYA", secretAccessKey: "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"});
+var dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
 module.exports = {
 	getHistory: function (name, callback){
 		getHistoryFromDynamoDB(name, callback);
 	},
-	addTravelRecord: function (object, resp){
-		addTravelRecordToDynamoDB(object, resp);
+	addTravelRecord: function (object, callback){
+		addTravelRecordToDynamoDB(object, callback);
 	}
 };
 
@@ -41,7 +41,7 @@ function getHistoryFromDynamoDB(name, callback){
 	});
 }
 
-function addTravelRecordToDynamoDB(object, resp){
+function addTravelRecordToDynamoDB(object, callback){
 	var params = {
 		"TableName":"eaton-travel-self-report",
 		"Item": {
@@ -55,7 +55,7 @@ function addTravelRecordToDynamoDB(object, resp){
 	  if (err) {
 	  	console.log(err, err.stack); 
 	  }else{
-	  	getHistoryFromDynamoDB(object.name, resp);
+	  	getHistoryFromDynamoDB(object.name, callback);
 	  }
 	});
 }

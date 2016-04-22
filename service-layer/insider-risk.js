@@ -1,5 +1,6 @@
 // insider-risk.js
 // ============
+var request = require('request');
 
 /* Internal App Files */
 var data_insider_risk = require('../data-layer/insider-risk');
@@ -33,49 +34,58 @@ function run(resp, limit){
 			var new_location_counts = {};
 			var tweet_limit = limit;
 			var external_call = false;
+			var self_report = false;
 			
 			if(tweet_limit == undefined){
 				tweet_limit = 60;
 				external_call = true;
+			}else if(tweet_limit == 0){
+				self_report = true;
 			}
 			
 			botboard.insider_name = "Bernie Sanders";
 			
-			data_insider_risk.getTravelFeedLocations(tweet_limit, function(retObj){
-				cachedLocationForDemo = [];
-				for(var i=0; i<retObj.length; i++){
-					if(retObj[i].locations.L[0] != undefined){
-						var tweet = object_botboard.new_tweet();
-						tweet.location.name = retObj[i].locations.L[0].M.name.S;
-						tweet.location.latitude = retObj[i].locations.L[0].M.latitude.N;
-						tweet.location.longitude = retObj[i].locations.L[0].M.longitude.N;
-						tweet.create_date = retObj[i].timestamp.N;
-						
-						if(new_location_counts[tweet.location.name] == undefined){
-							new_location_counts[tweet.location.name] = 1;
-						}else{
-							new_location_counts[tweet.location.name]++; 
+			if(!self_report){
+				data_insider_risk.getTravelFeedLocations(tweet_limit, function(retObj){
+						cachedLocationForDemo = [];
+						for(var i=0; i<retObj.length; i++){
+							if(retObj[i].locations.L[0] != undefined){
+								var tweet = object_botboard.new_tweet();
+								tweet.location.name = retObj[i].locations.L[0].M.name.S;
+								tweet.location.latitude = retObj[i].locations.L[0].M.latitude.N;
+								tweet.location.longitude = retObj[i].locations.L[0].M.longitude.N;
+								tweet.create_date = retObj[i].timestamp.N;
+								
+								if(new_location_counts[tweet.location.name] == undefined){
+									new_location_counts[tweet.location.name] = 1;
+								}else{
+									new_location_counts[tweet.location.name]++; 
+								}
+								
+								if(i < 30){
+									botboard.tweets.push(tweet);
+								}else{
+									cachedLocationForDemo.push(tweet);
+								}
+							}
 						}
 						
-						if(i < 30){
-							botboard.tweets.push(tweet);
-						}else{
-							cachedLocationForDemo.push(tweet);
+						for(var key in new_location_counts){
+							var location_count_object = {};
+							location_count_object.name = botboard.insider_name;
+							location_count_object.country = key;
+							location_count_object.count = new_location_counts[key];
+							location_count_object.year = new Date().getFullYear().toString();
+							data_insider_risk.updateTweetLocationsCounts(location_count_object);
 						}
-					}
-				}
-				
-				for(var key in new_location_counts){
-					var location_count_object = {};
-					location_count_object.name = botboard.insider_name;
-					location_count_object.country = key;
-					location_count_object.count = new_location_counts[key];
-					data_insider_risk.updateTweetLocationsCounts(location_count_object);
-				}
-				
+						
+						currentCallBackCount++;
+						calculateRiskSendAndSave(currentCallBackCount, desiredCallBackCount);
+				});
+			}else{
 				currentCallBackCount++;
 				calculateRiskSendAndSave(currentCallBackCount, desiredCallBackCount);
-			});
+			}
 			
 			data_pers_trav_report.getHistory(botboard.insider_name, function(retObj){
 				for(var i=0; i<retObj.length; i++){
@@ -114,10 +124,10 @@ function run(resp, limit){
 							}
 						}
 						
-						total_location_count += locations_counts[i].feed_count.N;
+						total_location_count += parseInt(locations_counts[i].feed_count.N);
 						
 						if(!reported){
-							unreported_locations += locations_counts[i].feed_count.N;
+							unreported_locations += parseInt(locations_counts[i].feed_count.N);
 						}
 					}
 					
@@ -125,7 +135,7 @@ function run(resp, limit){
 					console.log("unreported_locations="+unreported_locations)
 					
 					if(unreported_locations > 0){
-						travel_risk_score = Math.round(total_location_count/unreported_locations);
+						travel_risk_score = Math.round((unreported_locations/total_location_count)*100);
 					}else{
 						travel_risk_score = 100;
 					}
@@ -138,10 +148,10 @@ function run(resp, limit){
 					botboard.risk_scores.travel = travel_risk_score;
 					
 					//Send
-					if(external_call){ //External api call
+					if(external_call && !self_report){ //External api call
 						resp.send(botboard);
 					}else{
-						//TODO create post call
+						postToBotBoard(botboard);
 					}
 					
 					//Save
@@ -155,9 +165,8 @@ function run(resp, limit){
 					data_insider_risk.putRiskScore(botboard.insider_name, new_risk_score);
 					
 					//Kick off slow loop
-					if(external_call){ //External api call
-						//runSlowLoop();
-						console.log("RUN SLOW LOOP")
+					if(external_call && !self_report){ //External api call
+						runSlowLoop();
 					}
 				}
 			}
@@ -168,15 +177,26 @@ function run(resp, limit){
 function runSlowLoop(){
 	var elapsed_time = 0;
 	var random_number = 0;
-	var high = 6;
-	var low = 3;
+	var high = 6000;
+	var low = 3000;
 	
 	//This immediately fires off 30 jobs, at spread out randomized times
 	for(var i=0; i<30; i++){
-		random_number = Math.floor(Math.random() * hgih) + low;
+		random_number = Math.floor(Math.random() * high) + low;
 		setTimeout(function(){
 			run(null, 1);
 		}, elapsed_time + random_number);
 		elapsed_time += random_number;
 	}
+}
+
+function postToBotBoard(jsonObject){
+	request({
+	    url: "http://upboardlb-2027375028.us-east-1.elb.amazonaws.com:8080/feed/eaton",
+	    method: "POST",
+	    json: true,  
+	    body: jsonObject
+	}, function (error, response, body){
+	    console.log("BotBoard response = "+ JSON.stringify(response));
+	});
 }

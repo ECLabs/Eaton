@@ -3,7 +3,7 @@
 
 var AWS = require('aws-sdk'); 
 AWS.config.update({ region: "us-east-1" });
-var dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10', accessKeyId: "AKIAJBIDCSHBNGY6ECYA", secretAccessKey: "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"});
+var dynamodb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
 
 /* Internal Files */
 var object_botboard = require('../object-definitions/botboard');
@@ -84,16 +84,18 @@ function getTravelFeedLocationsFromDynamoDB(limit, callback){
 }
 
 function updateTweetLocationsCountsInDynamoDB(location_count_object){
+	console.log(JSON.stringify(location_count_object))
 	var params = {
-		"TableName":"eaton-insider-travel-counter",
+		"TableName":"eaton-external-feed-country-counter",
 		"Key" : {
 			"name":{"S":location_count_object.name},
-	        "country":{"S":location_count_object.country},
-	        "year":{"N":new Date().getFullYear().toString()}
+			"country":{"S":location_count_object.country}
 	    },
+	    "ConditionExpression":"reported_year = :reported_year",
 		"UpdateExpression" : "SET feed_count = feed_count + :newCount",
 	    "ExpressionAttributeValues" : {
-	        ":newCount" : {"N" : location_count_object.count.toString()}
+	        ":newCount" : {"N" : location_count_object.count.toString()},
+	        ":reported_year" : {"N" : location_count_object.year}
 	    }
 	};
 	dynamodb.updateItem(params, function(err, data) {
@@ -104,19 +106,20 @@ function updateTweetLocationsCountsInDynamoDB(location_count_object){
 	  	}else{
 	  		console.log(err, err.stack); 
 	  	}
+	  }else{
+	  	console.log("updating row")
 	  }
 	});
 }
 
 function putTweetLocationsCountsInDynamoDB(location_count_object){
 	var params = {
-		"TableName":"eaton-insider-travel-counter",
+		"TableName":"eaton-external-feed-country-counter",
 		"Item": {
 			"name":{"S":location_count_object.name},
 			"country":{"S":location_count_object.country},
 			"feed_count":{"N":location_count_object.count.toString()},
-			"year":{"N":new Date().getFullYear().toString()},
-		}
+			"reported_year":{"N":new Date().getFullYear().toString()}		}
 	};
 	dynamodb.putItem(params, function(err, data) {
 	  if (err) {
@@ -147,7 +150,7 @@ function putRiskScoreInDynamoDB(name, risk){
 
 function getTweetLocationsCountsFromDynamoDB(name, callback){
 	var params = {
-		"TableName": "eaton-insider-travel-counter",
+		"TableName": "eaton-external-feed-country-counter",
 		"KeyConditions": { 
 	        "name": {
 	            ComparisonOperator: 'EQ', 

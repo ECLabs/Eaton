@@ -26,6 +26,8 @@ $(document).ready(function(){
 		getHistory($(this).val());
 	});
 	
+	$("#user").hide();
+	
 	setupDatePickers();
 	
 	getHistory("Bernie Sanders");

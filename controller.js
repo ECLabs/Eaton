@@ -1,8 +1,10 @@
 // controller.js
 // ============
 
+var qs = require('querystring');
+
 /* Internal App Files */
-var data_persTravReport = require('./data-layer/pers-trav-report');
+var data_pers_trav_report = require('./data-layer/pers-trav-report');
 var service_insider_risk = require('./service-layer/insider-risk');
 
 module.exports = {
@@ -29,7 +31,12 @@ module.exports = {
 		  	var result = qs.parse(body);
 		  	
 		  	if(result.name != undefined){
-		  		data_persTravReport.addTravelRecord(result, res);
+		  		data_pers_trav_report.addTravelRecord(result, function(retObj){
+					res.send(retObj);
+					
+					//Fire post to BotBoard
+					service_insider_risk.demo(res, 0);
+				});
 		  	}else{
 		  		res.send("error: name is undefined");
 		  	}
@@ -52,7 +59,9 @@ module.exports = {
 		  	var result = qs.parse(body);
 		  	
 		  	if(result.name != undefined){
-		  		data_persTravReport.getHistory(result.name, res);
+		  		data_pers_trav_report.getHistory(result.name, function(retObj){
+					res.send(retObj);
+				});
 		  	}else{
 		  		res.send("error: name is undefined");
 		  	}

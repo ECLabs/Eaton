@@ -1,6 +1,5 @@
 var express = require('express');
 var http = require('http');
-var qs = require('querystring');
 var cors = require('cors');
 
 /* App files */ 
