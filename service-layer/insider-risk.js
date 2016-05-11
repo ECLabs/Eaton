@@ -192,7 +192,7 @@ function runSlowLoop(){
 
 function postToBotBoard(jsonObject){
 	request({
-	    url: "http://upboardlb-2027375028.us-east-1.elb.amazonaws.com:8080/feed/eaton",
+	    url: "http://upboardlb-1838760386.us-east-1.elb.amazonaws.com:8080/feed/eaton",
 	    method: "POST",
 	    json: true,  
 	    body: jsonObject
