@@ -1,4 +1,4 @@
-var baseUrl = window.location.hostname;
+var baseUrl = "http://"+window.location.hostname;
 var port = ':8081/';
 
 $(document).ready(function(){
