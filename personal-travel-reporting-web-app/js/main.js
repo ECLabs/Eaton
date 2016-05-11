@@ -1,4 +1,4 @@
-var baseUrl = 'http://ectechnology-eaton.us-east-1.elasticbeanstalk.com';
+var baseUrl = window.location.hostname;
 var port = ':8081/';
 
 $(document).ready(function(){
