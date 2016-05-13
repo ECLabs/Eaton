@@ -84,7 +84,6 @@ function run(resp, limit){
 					});
 				}else{
 					demoPostCount++;
-					
 					console.log("demoPostCount="+demoPostCount)
 					
 					var location_count_object = {};
@@ -95,7 +94,6 @@ function run(resp, limit){
 					data_insider_risk.updateTweetLocationsCounts(location_count_object);
 					
 					botboard.tweets.push(cachedLocationForDemo[demoPostCount]);
-					console.log("botboard.tweets="+botboard.tweets.toString())
 					
 					currentCallBackCount++;
 					calculateRiskSendAndSave(currentCallBackCount, desiredCallBackCount);
@@ -137,7 +135,7 @@ function run(resp, limit){
 					
 					/******* START DEMO TEMP CODE *******/
 					var unreported_location_list_demo = [];
-					for(var i=0; i<demoPostCount; i++){
+					for(var i=0; i<=demoPostCount; i++){
 						
 						reported = false;
 						for(var n=0; n<botboard.travel.length; n++){
@@ -150,10 +148,19 @@ function run(resp, limit){
 						total_location_count++;
 						
 						if(!reported){
-							var unreported_location = {};
-							unreported_location.location_name = cachedLocationForDemo[i].location.name;
-							unreported_location.reported_year = null;
-							unreported_location_list.push(unreported_location);
+							var dup = false;
+							for(var k=0; k<unreported_location_list.length; k++){
+								if(unreported_location_list[k].location_name == cachedLocationForDemo[i].location.name){
+									dup = true;
+									break;
+								}
+							}
+							if(!dup){
+								var unreported_location = {};
+								unreported_location.location_name = cachedLocationForDemo[i].location.name;
+								unreported_location.reported_year = null;
+								unreported_location_list.push(unreported_location);
+							}
 							unreported_locations++;
 						}
 					}
@@ -188,9 +195,6 @@ function run(resp, limit){
 					//Add unreported locations to the travel array, ensuring the self reports are last
 					unreported_location_list = unreported_location_list.concat(botboard.travel);
 					botboard.travel = unreported_location_list;
-					
-					console.log("total_location_count="+total_location_count)
-					console.log("unreported_locations="+unreported_locations)
 					
 					if(unreported_locations > 0){
 						travel_risk_score = Math.round((unreported_locations/total_location_count)*100);
