@@ -118,7 +118,31 @@ function run(resp, limit){
 			});
 			
 			data_insider_risk.getTweetLocationsCounts(botboard.insider_name, function(retObj){
-				locations_counts = retObj;
+				/* fake calculation for demo */
+				var demoTweetLocationCounts = [];
+				var demoObject = {};
+				var thisYear = new Date().getFullYear().toString();
+				
+				var i=0;
+				for(var key in new_location_counts){
+					console.log("key = "+key)
+					demoObject = {};
+					demoObject.name = {};
+					demoObject.name.S = botboard.insider_name;
+					demoObject.country = {};
+					demoObject.country.S = key;
+					demoObject.feed_count = {};
+					demoObject.feed_count.N = new_location_counts[key];
+					demoObject.reported_year = {};
+					demoObject.reported_year.S = thisYear;
+					
+					demoTweetLocationCounts.push(demoObject);					
+				}
+				
+				locations_counts = demoTweetLocationCounts;
+				
+				/* real calculation from database */
+				//locations_counts = retObj;
 				
 				currentCallBackCount++;
 				calculateRiskSendAndSave(currentCallBackCount, desiredCallBackCount);
