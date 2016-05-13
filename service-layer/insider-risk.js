@@ -95,6 +95,7 @@ function run(resp, limit){
 					data_insider_risk.updateTweetLocationsCounts(location_count_object);
 					
 					botboard.tweets.push(cachedLocationForDemo[demoPostCount]);
+					console.log("botboard.tweets="+botboard.tweets.toString())
 					
 					currentCallBackCount++;
 					calculateRiskSendAndSave(currentCallBackCount, desiredCallBackCount);
@@ -118,31 +119,7 @@ function run(resp, limit){
 			});
 			
 			data_insider_risk.getTweetLocationsCounts(botboard.insider_name, function(retObj){
-				/* fake calculation for demo */
-				var demoTweetLocationCounts = [];
-				var demoObject = {};
-				var thisYear = new Date().getFullYear().toString();
-				
-				var i=0;
-				for(var key in new_location_counts){
-					console.log("key = "+key)
-					demoObject = {};
-					demoObject.name = {};
-					demoObject.name.S = botboard.insider_name;
-					demoObject.country = {};
-					demoObject.country.S = key;
-					demoObject.feed_count = {};
-					demoObject.feed_count.N = new_location_counts[key];
-					demoObject.reported_year = {};
-					demoObject.reported_year.S = thisYear;
-					
-					demoTweetLocationCounts.push(demoObject);					
-				}
-				
-				locations_counts = demoTweetLocationCounts;
-				
-				/* real calculation from database */
-				//locations_counts = retObj;
+				locations_counts = retObj;
 				
 				currentCallBackCount++;
 				calculateRiskSendAndSave(currentCallBackCount, desiredCallBackCount);
@@ -157,7 +134,36 @@ function run(resp, limit){
 					var total_location_count = 0;
 					var reported = false;
 					var unreported_location_list = [];
-					for(var i=0; i<locations_counts.length; i++){
+					
+					/******* START DEMO TEMP CODE *******/
+					var unreported_location_list_demo = [];
+					for(var i=0; i<demoPostCount; i++){
+						
+						reported = false;
+						for(var n=0; n<botboard.travel.length; n++){
+							if(botboard.travel[n].location_name.toLowerCase() == cachedLocationForDemo[i].location.name.toLowerCase()){
+								reported = true;
+								break;
+							}
+						}
+
+						total_location_count++;
+						
+						if(!reported){
+							var unreported_location = {};
+							unreported_location.location_name = cachedLocationForDemo[i].location.name;
+							unreported_location.reported_year = null;
+							unreported_location_list.push(unreported_location);
+							unreported_locations++;
+						}
+					}
+					
+					/******* END DEMO TEMP CODE *******/
+					
+					
+					/******* START REAL CODE *******/
+					/*for(var i=0; i<locations_counts.length; i++){
+						
 						reported = false;
 						for(var n=0; n<botboard.travel.length; n++){
 							if(botboard.travel[n].location_name.toLowerCase() == locations_counts[i].country.S.toLowerCase()){
@@ -176,6 +182,8 @@ function run(resp, limit){
 							unreported_locations += parseInt(locations_counts[i].feed_count.N);
 						}
 					}
+					*/
+					/******* END REAL CODE *******/
 					
 					//Add unreported locations to the travel array, ensuring the self reports are last
 					unreported_location_list = unreported_location_list.concat(botboard.travel);
