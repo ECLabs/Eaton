@@ -8,7 +8,7 @@ module.exports = {
 		object.insider_name = "";
 		object.risk_scores = newRiskScore();
 		object.tweets = [];
-		object.reported_travel = [];
+		object.travel = [];
 		
 		return object;
 	},
