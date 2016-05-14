@@ -66,7 +66,7 @@ function run(resp, limit){
 									new_location_counts[tweet.location.name]++; 
 								}
 								
-								cachedLocationForDemo.push(tweet);
+								cachedLocationForDemo.unshift(tweet);
 							}
 						}
 						
@@ -193,7 +193,7 @@ function run(resp, limit){
 					unreported_location_list = unreported_location_list.concat(botboard.travel);
 					botboard.travel = unreported_location_list;
 					
-					console.log("botboard.travel="+JSON.stringify(botboard.travel))
+					console.log("botboard="+JSON.stringify(botboard))
 					
 					travel_risk_score = Math.round((unreported_locations/total_location_count)*100);
 					
@@ -208,7 +208,7 @@ function run(resp, limit){
 					if(external_call && !self_report){ //External api call
 						resp.send(botboard);
 					}else{
-						postToBotBoard(botboard);
+						//postToBotBoard(botboard);
 						demoPostCount++;
 					}
 					
