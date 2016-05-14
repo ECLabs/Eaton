@@ -81,7 +81,6 @@ function run(resp, limit){
 						calculateRiskSendAndSave(currentCallBackCount, desiredCallBackCount);
 					});
 				}else{
-					demoPostCount++;
 					console.log("demoPostCount="+demoPostCount)
 					
 					var location_count_object = {};
@@ -210,6 +209,7 @@ function run(resp, limit){
 						resp.send(botboard);
 					}else{
 						postToBotBoard(botboard);
+						demoPostCount++;
 					}
 					
 					//Save
