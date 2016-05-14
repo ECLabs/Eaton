@@ -208,7 +208,7 @@ function run(resp, limit){
 					if(external_call && !self_report){ //External api call
 						resp.send(botboard);
 					}else{
-						//postToBotBoard(botboard);
+						postToBotBoard(botboard);
 						demoPostCount++;
 					}
 					
