@@ -19,11 +19,19 @@ module.exports = {
 /* Private Methods */
 
 var tempBernieRiskScores = {};
-tempBernieRiskScores.total = 12;
-tempBernieRiskScores.computer = 15;
-tempBernieRiskScores.finance = 30;
-tempBernieRiskScores.foreign_contact = 2;
-tempBernieRiskScores.travel = 55;
+tempBernieRiskScores["A: Allegiance to the United States"] = 30;
+tempBernieRiskScores["B: Foreign Influence"] = 0;
+tempBernieRiskScores["C: Foreign Preference"] = 15;
+tempBernieRiskScores["D: Sexual Behavior"] = 10;
+tempBernieRiskScores["E: Personal Conduct"] = 8;
+tempBernieRiskScores["F: Financial Considerations"] = 5;
+tempBernieRiskScores["G: Alcohol Consumption"] = 3;
+tempBernieRiskScores["H: Drug Involvement"] = 3;
+tempBernieRiskScores["I: Psychological Conditions"] = 2;
+tempBernieRiskScores["J: Criminal Conduct"] = 1;
+tempBernieRiskScores["K: Handling Protected Information"] = 1;
+tempBernieRiskScores["L: Outside Activities"] = 1;
+tempBernieRiskScores["M: Use of Information Technology Systems"] = 1;
 
 function run(resp, limit){
 	(function(response){
@@ -193,16 +201,18 @@ function run(resp, limit){
 					unreported_location_list = unreported_location_list.concat(botboard.travel);
 					botboard.travel = unreported_location_list;
 					
-					console.log("botboard="+JSON.stringify(botboard))
-					
 					travel_risk_score = Math.round((unreported_locations/total_location_count)*100);
 					
-					botboard.risk_scores.total = Math.round((tempBernieRiskScores.computer + tempBernieRiskScores.finance +
-												tempBernieRiskScores.foreign_contact + travel_risk_score)/4);
-					botboard.risk_scores.computer = tempBernieRiskScores.computer;
-					botboard.risk_scores.finance = tempBernieRiskScores.finance;
-					botboard.risk_scores.foreign_contacts = tempBernieRiskScores.foreign_contact;
+					var sum = 0;
+					for(var key in tempBernieRiskScores){
+						sum += tempBernieRiskScores[key];
+						botboard.risk_scores[key] = tempBernieRiskScores[key];
+					}
+					
+					botboard.risk_scores.total = Math.round(sum/Object.keys(tempBernieRiskScores).length);
 					botboard.risk_scores.travel = travel_risk_score;
+					
+					console.log("botboard="+JSON.stringify(botboard))
 					
 					//Send
 					if(external_call && !self_report){ //External api call
@@ -213,14 +223,14 @@ function run(resp, limit){
 					}
 					
 					//Save
-					var new_risk_score = {};
-					new_risk_score.total = botboard.risk_scores.total;
-					new_risk_score.computer = botboard.risk_scores.computer;
-					new_risk_score.finance = botboard.risk_scores.finance;
-					new_risk_score.foreign_contact = botboard.risk_scores.foreign_contacts;
-					new_risk_score.travel = botboard.risk_scores.travel;
-					
-					data_insider_risk.putRiskScore(botboard.insider_name, new_risk_score);
+					// var new_risk_score = {};
+					// new_risk_score.total = botboard.risk_scores.total;
+					// new_risk_score.computer = botboard.risk_scores.computer;
+					// new_risk_score.finance = botboard.risk_scores.finance;
+					// new_risk_score.foreign_contact = botboard.risk_scores.foreign_contacts;
+					// new_risk_score.travel = botboard.risk_scores.travel;
+// 					
+					// data_insider_risk.putRiskScore(botboard.insider_name, new_risk_score);
 					
 					//Kick off slow loop
 					if(external_call && !self_report){ //External api call

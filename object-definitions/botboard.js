@@ -38,11 +38,19 @@ module.exports = {
 function newRiskScore(){
 	var object = {};
 		
-	object.total = 0;
-	object.computer = 0;
-	object.finance = 0;
-	object.foreign_contacts = 0;
-	object.travel = 0;
+	object["A: Allegiance to the United States"] = 0;
+	object["B: Foreign Influence"] = 0;
+	object["C: Foreign Preference"] = 0;
+	object["D: Sexual Behavior"] = 0;
+	object["E: Personal Conduct"] = 0;
+	object["F: Financial Considerations"] = 0;
+	object["G: Alcohol Consumption"] = 0;
+	object["H: Drug Involvement"] = 0;
+	object["I: Psychological Conditions"] = 0;
+	object["J: Criminal Conduct"] = 0;
+	object["K: Handling Protected Information"] = 0;
+	object["L: Outside Activities"] = 0;
+	object["M: Use of Information Technology Systems"] = 0;
 	
 	return object;
 }
