@@ -77,8 +77,6 @@ function run(resp, limit){
 						location_count_object.year = new Date().getFullYear().toString();
 						data_insider_risk.updateTweetLocationsCounts(location_count_object);
 						
-						botboard.tweets.push(cachedLocationForDemo[demoPostCount]);
-						
 						currentCallBackCount++;
 						calculateRiskSendAndSave(currentCallBackCount, desiredCallBackCount);
 					});
@@ -196,11 +194,9 @@ function run(resp, limit){
 					unreported_location_list = unreported_location_list.concat(botboard.travel);
 					botboard.travel = unreported_location_list;
 					
-					if(unreported_locations > 0){
-						travel_risk_score = Math.round((unreported_locations/total_location_count)*100);
-					}else{
-						travel_risk_score = 100;
-					}
+					console.log("botboard.travel="+JSON.stringify(botboard.travel))
+					
+					travel_risk_score = Math.round((unreported_locations/total_location_count)*100);
 					
 					botboard.risk_scores.total = Math.round((tempBernieRiskScores.computer + tempBernieRiskScores.finance +
 												tempBernieRiskScores.foreign_contact + travel_risk_score)/4);
