@@ -203,14 +203,14 @@ function run(resp, limit){
 					
 					travel_risk_score = Math.round((unreported_locations/total_location_count)*100);
 					
-					var sum = 0;
+					var sum = travel_risk_score;
 					for(var key in tempBernieRiskScores){
 						sum += tempBernieRiskScores[key];
 						botboard.risk_scores[key] = tempBernieRiskScores[key];
 					}
 					
+					botboard.risk_scores["B: Foreign Influence"] = travel_risk_score;
 					botboard.risk_scores.total = Math.round(sum/Object.keys(tempBernieRiskScores).length);
-					botboard.risk_scores.travel = travel_risk_score;
 					
 					console.log("botboard="+JSON.stringify(botboard))
 					
